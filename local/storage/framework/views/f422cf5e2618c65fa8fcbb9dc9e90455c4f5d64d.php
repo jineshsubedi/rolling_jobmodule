@@ -1,0 +1,168 @@
+<?php $__env->startSection('heading'); ?>
+Staff Settlement
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('breadcrubm'); ?>
+<li><a href="<?php echo e(url('/branchadmin')); ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+
+<li class="active">Staff Settlement</li>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box">
+        <div class="box-title">
+            <h3>Staff Settlement</h3>
+        </div>
+      <div class="box-body">
+      <form class="form-horizontal" role="form" id="testform" method="POST" action="<?php echo e(route('supervisor.obstaff.update', $obstaff->id)); ?>" enctype="multipart/form-data">
+        <?php echo csrf_field(); ?>
+
+        <?php echo method_field('PUT'); ?>
+
+       <div class="row">
+            <div class="col-md-6" id="multiCategory">
+                <div class="form-group<?php echo e($errors->has('type') ? ' has-error' : ''); ?>">
+                    <label class="col-md-2 control-label required">Type</label>
+                    <div class="col-md-10">
+                        <select name="type" id="obType" class="form-control">
+                            <option value="">Select Type</option>
+                            <?php foreach($types as $type): ?>
+                            <?php if($obstaff->type == $type->id): ?>
+                            <option value="<?php echo e($type->id); ?>" selected><?php echo e($type->title); ?></option>
+                            <?php else: ?>
+                            <option value="<?php echo e($type->id); ?>"><?php echo e($type->title); ?></option>
+                            <?php endif; ?>
+                            <?php endforeach; ?>
+                        </select>
+                        <?php if($errors->has('type')): ?>
+                            <span class="help-block">
+                                <strong><?php echo e($errors->first('type')); ?></strong>
+                            </span>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <div class="form-group<?php echo e($errors->has('particular') ? ' has-error' : ''); ?>">
+                    <label class="col-md-2 control-label required">Particular</label>
+                    <div class="col-md-10">
+                        <select name="particular" id="particular" class="form-control">
+                            <option value="">Select type</option>
+                        </select>
+                    </div>
+                    <?php if($errors->has('type')): ?>
+                        <span class="help-block">
+                            <strong><?php echo e($errors->first('type')); ?></strong>
+                        </span>
+                    <?php endif; ?>
+                </div>
+                <div class="form-group<?php echo e($errors->has('staff') ? ' has-error' : ''); ?>">
+                    <label class="col-md-2 control-label required">staff</label>
+                    <div class="col-md-10">
+                        <select name="staff" id="staff" class="form-control">
+                            <option value="">Select staff</option>
+                            <?php foreach($staffs as $staff): ?>
+                            <?php if($staff->id == $obstaff->staff_id): ?>
+                            <option value="<?php echo e($staff->id); ?>" selected><?php echo e($staff->name); ?></option>
+                            <?php else: ?>
+                            <option value="<?php echo e($staff->id); ?>"><?php echo e($staff->name); ?></option>
+                            <?php endif; ?>
+                            <?php endforeach; ?>
+                        </select>
+                        <?php if($errors->has('staff')): ?>
+                            <span class="help-block">
+                                <strong><?php echo e($errors->first('staff')); ?></strong>
+                            </span>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <div class="form-group<?php echo e($errors->has('from') ? ' has-error' : ''); ?>">
+                    <label class="col-md-2 control-label required">From</label>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control datepicker" id="from" name="from" value="<?php echo e($obstaff->from); ?>" autocomplete="off">
+                        <?php if($errors->has('from')): ?>
+                            <span class="help-block">
+                                <strong><?php echo e($errors->first('from')); ?></strong>
+                            </span>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <div class="form-group<?php echo e($errors->has('to') ? ' has-error' : ''); ?>">
+                    <label class="col-md-2 control-label">To</label>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control datepicker" id="to" name="to" value="<?php echo e($obstaff->to); ?>" autocomplete="off">
+                        <?php if($errors->has('to')): ?>
+                            <span class="help-block">
+                                <strong><?php echo e($errors->first('to')); ?></strong>
+                            </span>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <div class="form-group<?php echo e($errors->has('detail') ? ' has-error' : ''); ?>">
+                    <label class="col-md-2 control-label">Detail</label>
+                    <div class="col-md-10">
+                        <textarea name="detail" id="detail" class="form-control"><?php echo e($obstaff->detail); ?></textarea>
+                        <?php if($errors->has('detail')): ?>
+                            <span class="help-block">
+                                <strong><?php echo e($errors->first('detail')); ?></strong>
+                            </span>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group<?php echo e($errors->has('to') ? ' has-error' : ''); ?>">
+            <label class="col-md-2"></label>
+            <div class="col-md-10">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-fw fa-save"></i>Save
+                </button>
+            </div>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+  <script>
+    var token = $('input[name=\'_token\']').val();
+
+      $('.datepicker').datepicker();
+      $('#obType').change(function(){
+        var type = $(this).val();
+        getParticularByType(type)       
+      });
+      var type = $('#obType').val()
+      if(type != ''){
+        getParticularByType(type)
+      }
+      function getParticularByType(type)
+      {
+        $.ajax({
+            type: 'get',
+            url: '<?php echo e(route("supervisor.obstaff.getParticularByType")); ?>',
+            data: '_token='+token+'&type='+type,
+            cache: false,
+            success: function(data){
+                $('#particular').html('<option value="">Select Particular</option>');
+                var pdata = '<?php echo e($obstaff->particular); ?>';
+                $.each(data.data, function(index, value){
+                    if(pdata == value.particular){
+                      $('#particular')
+                        .append($("<option selected></option>")
+                        .attr("value",value.particular)
+                        .text(value.particular));  
+                    }else{
+                       $('#particular')
+                        .append($("<option></option>")
+                        .attr("value",value.particular)
+                        .text(value.particular));
+                    }
+                    
+                });
+            },
+            error: function(error){
+                console.log(error)
+            }
+        });
+      }
+  </script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('supervisor_master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

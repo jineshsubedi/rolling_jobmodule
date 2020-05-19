@@ -1,0 +1,7 @@
+/node_modules
+/public/hot
+/local/storage
+/local/*.key
+/.idea
+/.vscode
+/.vagrant
