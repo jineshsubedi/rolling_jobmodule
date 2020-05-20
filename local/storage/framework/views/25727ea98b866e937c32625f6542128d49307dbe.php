@@ -378,7 +378,7 @@ function drawBasic() {
                         <td><?php echo $i++ ;?></td>
                        <td><?php echo e($row->id); ?></td>
                        <td><?php echo e($row->tracking_code); ?></td>
-                         <td><a href="<?php echo e(url('branchadmin/jobs/application/view/'.$row->id)); ?>" target="_blank"><?php echo e(\App\Employees::getFullname($row->firstname,$row->middlename,$row->lastname)); ?></a></td>
+                         <td><a href="<?php echo e(url('branchadmin/jobs/application/view/'.$row->id)); ?>" target="_blank"><?php echo e(\App\Employee::getFullname($row->firstname,$row->middlename,$row->lastname)); ?></a></td>
                           <td><?php echo e($row->email); ?></td>
                           
                           <td><?php echo e($row->created_at); ?></td>

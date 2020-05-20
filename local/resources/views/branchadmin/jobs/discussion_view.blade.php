@@ -57,7 +57,7 @@ View Applicants
                                 </tr>
                                 <tr>
                                     <td style="width: 25%"><b> Full Name</b></td>
-                                    <td>{{\App\Employees::getFullname($datas['employee']->firstname,$datas['employee']->middlename,$datas['employee']->lastname)}}</td>
+                                    <td>{{\App\Employee::getFullname($datas['employee']->firstname,$datas['employee']->middlename,$datas['employee']->lastname)}}</td>
                                 </tr>
                                 <tr>
                                     <td><b> Email</b></td>

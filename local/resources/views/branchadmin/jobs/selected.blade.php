@@ -387,7 +387,7 @@ Selected Application for Final Selection
                         <td><?php echo $i;?></td>
                        <td>{{$row->id}}</td>
                        <td>{{$row->tracking_code}}</td>
-                         <td><a href="{{url('branchadmin/jobs/application/view/'.$row->id)}}" target="_blank">{{\App\Employees::getFullname($row->firstname,$row->middlename,$row->lastname)}}</a></td>
+                         <td><a href="{{url('branchadmin/jobs/application/view/'.$row->id)}}" target="_blank">{{\App\Employee::getFullname($row->firstname,$row->middlename,$row->lastname)}}</a></td>
                           <td>{{$row->email}}</td>
                           
                           <td>{{$row->symbol_no}}</td>
