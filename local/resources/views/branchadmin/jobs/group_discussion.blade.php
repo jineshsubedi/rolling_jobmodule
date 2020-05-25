@@ -45,6 +45,23 @@ Selected Application for Group Discussion
 {{-- @if(Auth::guard('staffs')->user()->user_type === 1) --}}
 <link rel="stylesheet" href="{{asset('/assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
 <script src="{{asset('assets/ckeditor/ckeditor.js')}}"></script>
+    @foreach($datas['meeting'] as $meeting )
+        <div class="row bg bg-success">
+            <div class="col-md-6 ">
+                <h5>Topic: {{$meeting->topic}}</h5>
+                <span>Start Tiime: {{$meeting->start_time}}</span>
+
+            </div>
+            <div class="col-md-6 bg bg-success">
+                <h5>Meeting ID: {{$meeting->zoom_id}}
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="https://zoom.us/s/{{$meeting->zoom_id}}" target="_blank" class="btn btn-primary"> start meeting</a>
+                </h5>
+                <span>Participant Id :{{$meeting->employee_id}}</span>
+            </div>
+        </div>
+        <hr>
+    @endforeach
    <div class="row">
       <div class="col-md-12">
       <div class="box box-success collapsed-box">
@@ -461,6 +478,7 @@ Selected Application for Group Discussion
               <form class="form-horizontal" role="form" id="testform_decussion" method="POST" action="{{ url('/branchadmin/jobs/update_discussion') }}">
                 {!! csrf_field() !!}
                 <input type="hidden" name="job_id" value="{{$datas['job_id']}}">
+                <input type="hidden" name="tab_id" value="3">
                   <table class="table table-bordered table-hover">
                     <thead>
                       <tr>
@@ -516,8 +534,9 @@ Selected Application for Group Discussion
                             <button class="btn btn-lg btn-black dropdown-toggle " type="button" data-toggle="dropdown">
                             <span class="caret"></span></button>
                             <ul class="dropdown-menu dropdown-menu-right">
-                           
-                            <li><a href="{{url('branchadmin/jobs/application/view/'.$row->id)}}" class="btn btn-default btn-xs" title="view"><i class="fa fa-eye"></i>View</a></li>     
+            <li><a href="{{url('branchadmin/jobs/tab3/'.$datas['job_id'].'/callmeeting/'.$row->id)}}" class="btn btn-default btn-xs" title="Create Zoom Meeting"><i class="fa fa-file"></i>Create Meeting</a></li>
+
+        <li><a href="{{url('branchadmin/jobs/application/view/'.$row->id)}}" class="btn btn-default btn-xs" title="view"><i class="fa fa-eye"></i>View</a></li>
                              {{-- @if(Auth::guard('staffs')->user()->user_type === 1)    --}}           
                             <li><a href="javascript:void(0);" onClick="confirm_delete('/{{$row->id}}')" class="btn btn-danger btn-xs" title="Delete Invoice"><i class="fa fa-fw fa-remove"></i>Delete</a></li>
                              @if($strategic != '')  
@@ -549,8 +568,10 @@ Selected Application for Group Discussion
                       @endif
                       {{--@if(Auth::guard('staffs')->user()->user_type === 1)--}}
                        <tr>
-                        <td colspan="9"><button type="button" id="for-discussion" onClick="confirm_update()" class="btn btn-black">Select for Final Interview</button></td>
-                      </tr>
+                        <td colspan="2"><button type="button" id="for-discussion" onClick="confirm_update()" class="btn btn-black">Select for Final Interview</button></td>
+                        <td colspan="7"><button type="button" id="for-meeting" onClick="confirm_meeting()" class="btn btn-black">Select for Group Meeting</button></td>
+
+                    </tr>
                       {{-- @endif --}}
                     </tfoot>
                     </table>
@@ -572,6 +593,15 @@ Selected Application for Group Discussion
   </div>
   
   <script type="text/javascript">
+        function confirm_meeting(){
+
+            if(confirm('Are you sure you want to Call for meeting to selected applicants ?')){
+                var action = '{{ url('/branchadmin/jobs/application/groupMeeting') }}';
+                $('#testform_decussion').attr('action', action);
+                $('#testform_decussion').submit();
+
+            }
+        };
  function confirm_delete(ids){
     if(confirm('Do You Want To Delete This Employee?')){
       var url= "{{ url('/branchadmin/jobs/discussion/delete/') }}"+ids;

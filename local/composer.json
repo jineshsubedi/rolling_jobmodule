@@ -12,8 +12,9 @@
         "farhanwazir/laravelgooglemaps": "dev-master",
         "barryvdh/laravel-dompdf": "^0.8.1",
         "maatwebsite/excel": "~2.1.0",
-        "simplesoftwareio/simple-qrcode": "~2"
-        
+        "simplesoftwareio/simple-qrcode": "~2",
+      "ext-curl": "*",
+        "ext-json": "*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

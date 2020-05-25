@@ -58,7 +58,16 @@ Route::group(['prefix' => 'branchadmin', 'middleware' => ['web']], function () {
     Route::get('/jobs/written/printprofile/{id}', 'branchadmin\JobController@writtenPrint');
     Route::get('/jobs/written/makepdf/{id}', 'branchadmin\JobController@writtenPdf');
     Route::get('/jobs/generate_symbol/{id}/{type}', 'branchadmin\JobController@generateSymbol');
-    
+
+    //    zoom work
+//    Route::get('/jobs/application/meeting/{id}', 'branchadmin\JobController@meetingView');
+    Route::get('/jobs/tab{tab_id}/{job_id}/callmeeting/{id}', 'branchadmin\JobController@meetingCallView');
+    Route::post('/jobs/application/meeting', 'branchadmin\JobController@meetingView');
+    Route::post('/jobs/application/groupMeeting', 'branchadmin\JobController@groupMeetingView');
+    Route::post('/jobs/application/callGroupMeeting', 'branchadmin\JobController@callGroupMeeting');
+
+
+
     Route::post('/jobs/uploadwritten', 'branchadmin\JobController@uploadXlwritten');
     Route::get('/jobs/exportCsv/{id}', 'branchadmin\JobController@exportCsv');
     

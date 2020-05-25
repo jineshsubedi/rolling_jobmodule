@@ -1,14 +1,13 @@
-@extends('branchadmin_master')
-@section('heading')
+<?php $__env->startSection('heading'); ?>
 Selected Application for Written Exam
             <small>List of Selected Application for Written Exam</small>
-@stop
-@section('breadcrubm')
- <li><a href="{{ url('/branchadmin') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('breadcrubm'); ?>
+ <li><a href="<?php echo e(url('/branchadmin')); ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             
             <li class="active">Selected Application for Written Exam</li>
-@stop
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
  <div class="row">
     <div class="col-xs-12">
       
@@ -18,50 +17,52 @@ Selected Application for Written Exam
               <div class="panel-heading">
       <div class="top-links btn-group">
 
-        <a href="{{ url('/branchadmin/jobs/application/'.$datas['job_id']) }}" class="btn btn-default">All Application ({{\App\Employee::countAllApplicant($datas['job_id'])}})</a>
-         <a href="{{ url('/branchadmin/jobs/verification/'.$datas['job_id']) }}" class="btn btn-default">Document Verification ({{\App\Employee::countDocumentVerification($datas['job_id'])}})</a>
-        <a href="{{ url('/branchadmin/jobs/written/'.$datas['job_id']) }}" class="btn btn-success">Written Exam ({{\App\Employee::countWrittenExam($datas['job_id'])}})</a>
-        <a href="{{ url('/branchadmin/jobs/discussion/'.$datas['job_id']) }}" class="btn btn-default">Group Discussion ({{\App\Employee::countGroup($datas['job_id'])}})</a>
-        <a href="{{ url('/branchadmin/jobs/interview/'.$datas['job_id']) }}" class="btn btn-default">Final Interview ({{\App\Employee::countInterview($datas['job_id'])}})</a>
-        <a href="{{ url('/branchadmin/jobs/selected/'.$datas['job_id']) }}" class="btn btn-default">Selected Candidates ({{\App\Employee::countSelected($datas['job_id'])}})</a>
+        <a href="<?php echo e(url('/branchadmin/jobs/application/'.$datas['job_id'])); ?>" class="btn btn-default">All Application (<?php echo e(\App\Employee::countAllApplicant($datas['job_id'])); ?>)</a>
+         <a href="<?php echo e(url('/branchadmin/jobs/verification/'.$datas['job_id'])); ?>" class="btn btn-default">Document Verification (<?php echo e(\App\Employee::countDocumentVerification($datas['job_id'])); ?>)</a>
+        <a href="<?php echo e(url('/branchadmin/jobs/written/'.$datas['job_id'])); ?>" class="btn btn-success">Written Exam (<?php echo e(\App\Employee::countWrittenExam($datas['job_id'])); ?>)</a>
+        <a href="<?php echo e(url('/branchadmin/jobs/discussion/'.$datas['job_id'])); ?>" class="btn btn-default">Group Discussion (<?php echo e(\App\Employee::countGroup($datas['job_id'])); ?>)</a>
+        <a href="<?php echo e(url('/branchadmin/jobs/interview/'.$datas['job_id'])); ?>" class="btn btn-default">Final Interview (<?php echo e(\App\Employee::countInterview($datas['job_id'])); ?>)</a>
+        <a href="<?php echo e(url('/branchadmin/jobs/selected/'.$datas['job_id'])); ?>" class="btn btn-default">Selected Candidates (<?php echo e(\App\Employee::countSelected($datas['job_id'])); ?>)</a>
        
         
         
         </div>
     </div>
-    @if(count($errors))
+    <?php if(count($errors)): ?>
                 <div class="row">
             <div class="col-xs-12">
             <div class="alert alert-danger">
-             @foreach($errors->all() as $error)
-              {{ '* : '.$error }}</br>
-             @endforeach
+             <?php foreach($errors->all() as $error): ?>
+              <?php echo e('* : '.$error); ?></br>
+             <?php endforeach; ?>
                 </div>
             </div>
 
           </div>
-       @endif
-{{-- @if(Auth::guard('staffs')->user()->user_type === 1) --}}
-<link rel="stylesheet" href="{{asset('/assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
-<script src="{{asset('assets/ckeditor/ckeditor.js')}}"></script>
-    @foreach($datas['meeting'] as $meeting )
+       <?php endif; ?>
+<?php /* <?php if(Auth::guard('staffs')->user()->user_type === 1): ?> */ ?>
+<link rel="stylesheet" href="<?php echo e(asset('/assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')); ?>">
+<script src="<?php echo e(asset('assets/ckeditor/ckeditor.js')); ?>"></script>
+    <?php foreach($datas['meeting'] as $meeting ): ?>
         <div class="row bg bg-success">
             <div class="col-md-6 ">
-                <h5>Topic: {{$meeting->topic}}</h5>
-                <span>Start Tiime: {{$meeting->start_time}}</span>
+                <h5>Topic: <?php echo e($meeting->topic); ?></h5>
+                <span>Start Tiime: <?php echo e($meeting->start_time); ?></span>
 
             </div>
             <div class="col-md-6 bg bg-success">
-                <h5>Meeting ID: {{$meeting->zoom_id}}
+                <h5>Meeting ID: <?php echo e($meeting->zoom_id); ?>
+
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="https://zoom.us/s/{{$meeting->zoom_id}}" target="_blank" class="btn btn-primary"> start meeting</a>
+                    <a href="https://zoom.us/s/<?php echo e($meeting->zoom_id); ?>" target="_blank" class="btn btn-primary"> start meeting</a>
                 </h5>
-                <span>Participant Id :{{$meeting->employee_id}}
+                <span>Participant Id :<?php echo e($meeting->employee_id); ?>
+
                 </span>
             </div>
         </div>
         <hr>
-    @endforeach
+    <?php endforeach; ?>
    <div class="row">
       <div class="col-md-12">
       <div class="box box-success collapsed-box">
@@ -80,25 +81,26 @@ Selected Application for Written Exam
                 <div class="col-md-12">
                 
                 <div class="row-detail report-row">
-      <form class="form-horizontal" enctype="multipart/form-data" role="form" id="testform" method="POST" action="{{ url('/branchadmin/jobs/updatestatus') }}">
+      <form class="form-horizontal" enctype="multipart/form-data" role="form" id="testform" method="POST" action="<?php echo e(url('/branchadmin/jobs/updatestatus')); ?>">
                        
-                        <input type="hidden" name="jobs_id" value="{{$datas['jobs_id']}}">
-                        {!! csrf_field() !!}
+                        <input type="hidden" name="jobs_id" value="<?php echo e($datas['jobs_id']); ?>">
+                        <?php echo csrf_field(); ?>
+
                         
                         
                        
                          <div class="col-md-12">
-                            <div class="form-group {{$errors->has('status') ? ' has-error' : ''}}">
+                            <div class="form-group <?php echo e($errors->has('status') ? ' has-error' : ''); ?>">
                                 <label class="label-control required col-md-2 text-center">Job Status</label>
                                 <div class="col-md-10">
                                     <select class="form-control" name="status">
-                                        @foreach($datas['process_status'] as $status)
-                                        @if($datas['status'] == $status->id)
-                                        <option selected="selected" value="{{$status->id}}">{{$status->title}}</option>
-                                        @else
-                                        <option value="{{$status->id}}">{{$status->title}}</option>
-                                        @endif
-                                        @endforeach
+                                        <?php foreach($datas['process_status'] as $status): ?>
+                                        <?php if($datas['status'] == $status->id): ?>
+                                        <option selected="selected" value="<?php echo e($status->id); ?>"><?php echo e($status->title); ?></option>
+                                        <?php else: ?>
+                                        <option value="<?php echo e($status->id); ?>"><?php echo e($status->title); ?></option>
+                                        <?php endif; ?>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                             </div>
@@ -148,12 +150,13 @@ Selected Application for Written Exam
                 <div class="col-md-12">
                 
                 <div class="row-detail report-row">
-      <form class="form-horizontal" enctype="multipart/form-data" role="form" id="testform" method="POST" action="{{ url('/branchadmin/jobs/eventupdate') }}">
+      <form class="form-horizontal" enctype="multipart/form-data" role="form" id="testform" method="POST" action="<?php echo e(url('/branchadmin/jobs/eventupdate')); ?>">
                        
-                        <input type="hidden" name="jobs_id" value="{{$datas['jobs_id']}}">
-                        {!! csrf_field() !!}
-                        <input type="hidden" name="detail_id" value="{{$datas['report']['id']}}">
-                        <input type="hidden" name="detail_type" value="{{$datas['report']['detail_type']}}">
+                        <input type="hidden" name="jobs_id" value="<?php echo e($datas['jobs_id']); ?>">
+                        <?php echo csrf_field(); ?>
+
+                        <input type="hidden" name="detail_id" value="<?php echo e($datas['report']['id']); ?>">
+                        <input type="hidden" name="detail_type" value="<?php echo e($datas['report']['detail_type']); ?>">
                         <input type="hidden" name="page" value="verification">
                         
                        
@@ -161,21 +164,21 @@ Selected Application for Written Exam
                                     <div class="form-group">
                                         <label class="label-control required col-md-12 text-center">Event Date</label>
                                         <div class="col-md-12">
-                                             <input type="text" name="detail_date" class="form-control date" value="{{$datas['report']['detail_date']}}">
+                                             <input type="text" name="detail_date" class="form-control date" value="<?php echo e($datas['report']['detail_date']); ?>">
                                    
                                         </div>
                                     </div>
                                      <div class="form-group">
                                         <label class="label-control required col-md-12 text-center">Event Time</label>
                                         <div class="col-md-12">
-                                             <input type="text" name="detail_time" class="form-control" value="{{$datas['report']['detail_time']}}">
+                                             <input type="text" name="detail_time" class="form-control" value="<?php echo e($datas['report']['detail_time']); ?>">
                                    
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="label-control required col-md-12 text-center">Event Venue</label>
                                         <div class="col-md-12">
-                                             <input type="text" name="detail_venue" class="form-control" value="{{$datas['report']['detail_venue']}}">
+                                             <input type="text" name="detail_venue" class="form-control" value="<?php echo e($datas['report']['detail_venue']); ?>">
                                    
                                         </div>
                                     </div>
@@ -184,7 +187,7 @@ Selected Application for Written Exam
                                     <div class="form-group ">
                                         <label class="label-control required col-md-12 text-center">Description</label>
                                         <div class="col-md-12">
-                                            <textarea class="form-control" name="description">{{$datas['report']['description']}}</textarea>
+                                            <textarea class="form-control" name="description"><?php echo e($datas['report']['description']); ?></textarea>
                                   
                                         </div>
                                     </div>
@@ -233,12 +236,13 @@ Selected Application for Written Exam
                 <div class="col-md-12">
                 
                 <div class="row-detail report-row">
-      <form class="form-horizontal" enctype="multipart/form-data" role="form" id="testform" method="POST" action="{{ url('/branchadmin/jobs/atsupdate') }}">
+      <form class="form-horizontal" enctype="multipart/form-data" role="form" id="testform" method="POST" action="<?php echo e(url('/branchadmin/jobs/atsupdate')); ?>">
                        
-                        <input type="hidden" name="jobs_id" value="{{$datas['jobs_id']}}">
-                        {!! csrf_field() !!}
-                        <input type="hidden" name="detail_id" value="{{$datas['report']['id']}}">
-                        <input type="hidden" name="detail_type" value="{{$datas['report']['detail_type']}}">
+                        <input type="hidden" name="jobs_id" value="<?php echo e($datas['jobs_id']); ?>">
+                        <?php echo csrf_field(); ?>
+
+                        <input type="hidden" name="detail_id" value="<?php echo e($datas['report']['id']); ?>">
+                        <input type="hidden" name="detail_type" value="<?php echo e($datas['report']['detail_type']); ?>">
                         <input type="hidden" name="page" value="verification">
                         
                        
@@ -246,18 +250,18 @@ Selected Application for Written Exam
                                     <div class="form-group ">
                                         <label class="label-control col-md-12 text-center">Success Message</label>
                                         <div class="col-md-12">
-                                              <textarea rows="8" class="form-control" id="success_message" name="success_message">{{$datas['report']['success_message']}}</textarea>
+                                              <textarea rows="8" class="form-control" id="success_message" name="success_message"><?php echo e($datas['report']['success_message']); ?></textarea>
                                     <script>
                                              CKEDITOR.replace('success_message',
                                                     {
-                                                                  filebrowserBrowseUrl : '{{ url("assets/ckfinder/ckfinder.html")}}',
-                                                                  filebrowserImageBrowseUrl : '{{ url("assets/ckfinder/ckfinder.html?type=Images")}}',
-                                                                  filebrowserFlashBrowseUrl : '{{ url("assets/ckfinder/ckfinder.html?type=Flash")}}',
+                                                                  filebrowserBrowseUrl : '<?php echo e(url("assets/ckfinder/ckfinder.html")); ?>',
+                                                                  filebrowserImageBrowseUrl : '<?php echo e(url("assets/ckfinder/ckfinder.html?type=Images")); ?>',
+                                                                  filebrowserFlashBrowseUrl : '<?php echo e(url("assets/ckfinder/ckfinder.html?type=Flash")); ?>',
                                                                   filebrowserUploadUrl : 
-                                                '{{ url("assets/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files")}}',
+                                                '<?php echo e(url("assets/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files")); ?>',
                                                                   filebrowserImageUploadUrl : 
-                                                '{{ url("assets/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images")}}',
-                                                                  filebrowserFlashUploadUrl : '{{ url("assets/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash")}}',
+                                                '<?php echo e(url("assets/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images")); ?>',
+                                                                  filebrowserFlashUploadUrl : '<?php echo e(url("assets/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash")); ?>',
                                                                   enterMode: CKEDITOR.ENTER_BR
                                                                  } 
                                                     
@@ -271,7 +275,7 @@ Selected Application for Written Exam
                                     <div class="form-group ">
                                         <label class="label-control col-md-12 text-center">Regret Message</label>
                                         <div class="col-md-12">
-                                             <textarea rows="8" class="form-control" name="error_message">{{$datas['report']['error_message']}}</textarea>
+                                             <textarea rows="8" class="form-control" name="error_message"><?php echo e($datas['report']['error_message']); ?></textarea>
                                     
                                         </div>
                                     </div>
@@ -319,22 +323,23 @@ Selected Application for Written Exam
                 <div class="row-detail report-row">
                 
                 <div class="row">
-              <form class="form-horizontal" method="POST" accept-charset="UTF-8" enctype="multipart/form-data" action="{{ url('/branchadmin/jobs/upload_written') }}">
-                <input type="hidden" name="jobs_id" value="{{$datas['job_id']}}">
-              {!! csrf_field() !!}
+              <form class="form-horizontal" method="POST" accept-charset="UTF-8" enctype="multipart/form-data" action="<?php echo e(url('/branchadmin/jobs/upload_written')); ?>">
+                <input type="hidden" name="jobs_id" value="<?php echo e($datas['job_id']); ?>">
+              <?php echo csrf_field(); ?>
+
               <div class="col-md-4">
-                <div class="form-group{{ $errors->has('upload_file') ? ' has-error' : '' }}">
+                <div class="form-group<?php echo e($errors->has('upload_file') ? ' has-error' : ''); ?>">
                             <label class="col-md-3 control-label">Select CSV File</label>
 
                             <div class="col-md-9">
                             
                            <input type="file" required name="upload_file" class="form-control" >
                               
-                             @if ($errors->has('upload_file'))
+                             <?php if($errors->has('upload_file')): ?>
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('upload_file') }}</strong>
+                                        <strong><?php echo e($errors->first('upload_file')); ?></strong>
                                     </span>
-                                @endif
+                                <?php endif; ?>
                                
                             </div>
                         </div>
@@ -345,7 +350,7 @@ Selected Application for Written Exam
                                 </button>
               </div>
               
-              <div class="col-md-4"><a href="{{url('image/sample.csv')}}" class="btn btn-success" title="Download Sample File" download>Sample File</a></div>
+              <div class="col-md-4"><a href="<?php echo e(url('image/sample.csv')); ?>" class="btn btn-success" title="Download Sample File" download>Sample File</a></div>
             </form>
           </div>
       
@@ -393,7 +398,7 @@ Selected Application for Written Exam
           </div>
         </div>
     </div>
-    <script src="{{asset('/assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js')}}"></script>
+    <script src="<?php echo e(asset('/assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js')); ?>"></script>
 <script>
   $(function () {
    $('.date').datepicker();
@@ -405,7 +410,7 @@ Selected Application for Written Exam
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
-<script src="{{asset('/assets/chart.js/Chart.js')}}"></script>
+<script src="<?php echo e(asset('/assets/chart.js/Chart.js')); ?>"></script>
 <script type="text/javascript">
 	$(function(){
 		
@@ -414,7 +419,7 @@ Selected Application for Written Exam
       element: 'bar-chart',
       resize: true,
       data: [
-        {y: 'Male/Female', a: '{{$datas["total_male"]}}', b: '{{$datas["total_female"]}}'},
+        {y: 'Male/Female', a: '<?php echo e($datas["total_male"]); ?>', b: '<?php echo e($datas["total_female"]); ?>'},
         
         
       ],
@@ -427,21 +432,21 @@ Selected Application for Written Exam
     
      
      
-     @if(count($datas['age']) > 0)
+     <?php if(count($datas['age']) > 0): ?>
   var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
     var pieChart       = new Chart(pieChartCanvas)
     var PieData        = [
-    @foreach($datas['age'] as $age)
+    <?php foreach($datas['age'] as $age): ?>
       {
-        value    : '{{$age["total"]}}',
-        color    : '{{$age["color"]}}',
-        highlight: '{{$age["color"]}}',
-        label    : '{{$age["title"]}}'
+        value    : '<?php echo e($age["total"]); ?>',
+        color    : '<?php echo e($age["color"]); ?>',
+        highlight: '<?php echo e($age["color"]); ?>',
+        label    : '<?php echo e($age["title"]); ?>'
       },
       
-      @endforeach
+      <?php endforeach; ?>
     ]
-    @endif
+    <?php endif; ?>
     var pieOptions     = {
       //Boolean - Whether we should show a stroke on each segment
       segmentShowStroke    : true,
@@ -472,10 +477,11 @@ Selected Application for Written Exam
 
 	});
 </script>
-{{-- @endif --}}
-               <form class="form-horizontal" role="form" id="testform_writtenexam" method="POST" action="{{ url('/branchadmin/jobs/update_written') }}">
-                {!! csrf_field() !!}
-                <input type="hidden" name="job_id" value="{{$datas['job_id']}}">
+<?php /* <?php endif; ?> */ ?>
+               <form class="form-horizontal" role="form" id="testform_writtenexam" method="POST" action="<?php echo e(url('/branchadmin/jobs/update_written')); ?>">
+                <?php echo csrf_field(); ?>
+
+                <input type="hidden" name="job_id" value="<?php echo e($datas['job_id']); ?>">
                 <input type="hidden" name="tab_id" value="2">
                   <table class="table table-bordered table-hover">
                     <thead>
@@ -497,11 +503,11 @@ Selected Application for Written Exam
                     <tbody>
                       <tr>
                         <td></td>
-                        <td><input type="text" id="filter_id" value="{{$datas['filter_id']}}" class="form-control"></td>
+                        <td><input type="text" id="filter_id" value="<?php echo e($datas['filter_id']); ?>" class="form-control"></td>
                         <td></td>
-                        <td><input type="text" id="filter_name" value="{{$datas['filter_name']}}" class="form-control"></td>
-                        <td><input type="text" id="filter_email" value="{{$datas['filter_email']}}" class="form-control"></td>
-                        <td><input type="text" id="filter_symbol_no" value="{{$datas['filter_symbol_no']}}" class="form-control"></td>
+                        <td><input type="text" id="filter_name" value="<?php echo e($datas['filter_name']); ?>" class="form-control"></td>
+                        <td><input type="text" id="filter_email" value="<?php echo e($datas['filter_email']); ?>" class="form-control"></td>
+                        <td><input type="text" id="filter_symbol_no" value="<?php echo e($datas['filter_symbol_no']); ?>" class="form-control"></td>
                         <td></td>
                         <td></td>
                         <td><a href="javascript:void(0);" onClick="filter()" class="btn btn-black"><i class="fa fa-fw fa-search"></i></a></td>
@@ -510,22 +516,22 @@ Selected Application for Written Exam
                       <?php $i=1; 
                         foreach ($datas['employees'] as $row) { ?>
                           <tr>
-                        <td><?php echo $i;?><input type="checkbox" name="employee_id[]" value="{{$row->id}}" /></td>
-                       <td>{{$row->id}}</td>
-                       <td>{{$row->tracking_code}}</td>
-                         <td><a href="{{url('branchadmin/jobs/application/view/'.$row->id)}}" target="_blank">{{\App\Employee::getFullname($row->firstname,$row->middlename,$row->lastname)}}</a></td>
-                          <td>{{$row->email}}</td>
+                        <td><?php echo $i;?><input type="checkbox" name="employee_id[]" value="<?php echo e($row->id); ?>" /></td>
+                       <td><?php echo e($row->id); ?></td>
+                       <td><?php echo e($row->tracking_code); ?></td>
+                         <td><a href="<?php echo e(url('branchadmin/jobs/application/view/'.$row->id)); ?>" target="_blank"><?php echo e(\App\Employee::getFullname($row->firstname,$row->middlename,$row->lastname)); ?></a></td>
+                          <td><?php echo e($row->email); ?></td>
                           
-                          <td>{{$row->symbol_no}}</td>
-                          <td>@if($row->participation == 1)
+                          <td><?php echo e($row->symbol_no); ?></td>
+                          <td><?php if($row->participation == 1): ?>
                           Agree
-                          @elseif($row->participation == 2)
+                          <?php elseif($row->participation == 2): ?>
                           Declined
-                          @else
-                          @endif
+                          <?php else: ?>
+                          <?php endif; ?>
                           </td>
                            <?php $pstat = \App\EmployeeExtraData::checkData($row->id); ?>
-                          <td>{{$pstat != '' ? 'Received':'Not Received'}}</td>
+                          <td><?php echo e($pstat != '' ? 'Received':'Not Received'); ?></td>
                         <td>
                          
                          <?php $strategic = \App\EmployeeExtraData::getStrategic($row->id);
@@ -535,18 +541,18 @@ Selected Application for Written Exam
                             <button class="btn btn-lg btn-black dropdown-toggle " type="button" data-toggle="dropdown">
                             <span class="caret"></span></button>
                             <ul class="dropdown-menu dropdown-menu-right">
-            <li><a href="{{url('branchadmin/jobs/tab2/'.$datas['job_id'].'/callmeeting/'.$row->id)}}" class="btn btn-default btn-xs" title="Create Zoom Meeting"><i class="fa fa-file"></i>Create Meeting</a></li>
+            <li><a href="<?php echo e(url('branchadmin/jobs/tab2/'.$datas['job_id'].'/callmeeting/'.$row->id)); ?>" class="btn btn-default btn-xs" title="Create Zoom Meeting"><i class="fa fa-file"></i>Create Meeting</a></li>
 
-        <li><a href="{{url('branchadmin/jobs/application/view/'.$row->id)}}" class="btn btn-default btn-xs" title="view"><i class="fa fa-eye"></i>View</a></li>
-                            {{-- @if(Auth::guard('employer')->user()->user_type === 1) --}}             
-                            <li><a href="javascript:void(0);" onClick="confirm_delete('/{{$row->id}}')" class="btn btn-danger btn-xs" title="Delete Invoice"><i class="fa fa-fw fa-remove"></i>Delete</a></li>
-                             @if($strategic != '')  
-                            <li><a href="{{$strategic}}" class="btn btn-default" title="Download Strategic Paper" download="download"><i class="fa fa-download"></i>Strategic Paper</a></li>
-                            @endif 
-                            @if($presentation != '')  
-                            <li><a href="{{$presentation}}" class="btn btn-default" title="Download Presentation" download="download"><i class="fa fa-download"></i>Presentation</a></li>
-                            @endif
-                            {{-- @endif --}}
+        <li><a href="<?php echo e(url('branchadmin/jobs/application/view/'.$row->id)); ?>" class="btn btn-default btn-xs" title="view"><i class="fa fa-eye"></i>View</a></li>
+                            <?php /* <?php if(Auth::guard('employer')->user()->user_type === 1): ?> */ ?>             
+                            <li><a href="javascript:void(0);" onClick="confirm_delete('/<?php echo e($row->id); ?>')" class="btn btn-danger btn-xs" title="Delete Invoice"><i class="fa fa-fw fa-remove"></i>Delete</a></li>
+                             <?php if($strategic != ''): ?>  
+                            <li><a href="<?php echo e($strategic); ?>" class="btn btn-default" title="Download Strategic Paper" download="download"><i class="fa fa-download"></i>Strategic Paper</a></li>
+                            <?php endif; ?> 
+                            <?php if($presentation != ''): ?>  
+                            <li><a href="<?php echo e($presentation); ?>" class="btn btn-default" title="Download Presentation" download="download"><i class="fa fa-download"></i>Presentation</a></li>
+                            <?php endif; ?>
+                            <?php /* <?php endif; ?> */ ?>
                             
                             </ul>
                             </div>
@@ -558,22 +564,22 @@ Selected Application for Written Exam
                       
                     </tbody>
                     <tfoot>
-                       @if($datas['thumb'] != '' || $datas['detail'] != '')
+                       <?php if($datas['thumb'] != '' || $datas['detail'] != ''): ?>
                       <tr>
                         <td colspan="3"><strong>Report File</strong></td>
-                        <td colspan="6"><a href="{{$datas['file']}}"><img src="{{asset($datas['thumb'])}}"></a></td>
+                        <td colspan="6"><a href="<?php echo e($datas['file']); ?>"><img src="<?php echo e(asset($datas['thumb'])); ?>"></a></td>
                       </tr>
                       <tr>
                         <td colspan="9"><?php echo $datas['detail']; ?></td>
                       </tr>
 
-                      @endif
-                      {{--@if(Auth::guard('employer')->user()->user_type === 1)--}}
+                      <?php endif; ?>
+                      <?php /*<?php if(Auth::guard('employer')->user()->user_type === 1): ?>*/ ?>
                       <tr>
                         <td colspan="2"><button type="button" id="for-written" onClick="confirm_update()" class="btn btn-black">Select for Group Discussion</button></td>
                         <td colspan="7"><button type="button" id="for-meeting" onClick="confirm_meeting()" class="btn btn-black">Select for Group Meeting</button></td>
                     </tr>
-                      {{-- @endif --}}
+                      <?php /* <?php endif; ?> */ ?>
                     </tfoot>
                     </table>
                   </form>
@@ -597,7 +603,7 @@ Selected Application for Written Exam
     function confirm_meeting(){
 
         if(confirm('Are you sure you want to Call for meeting to selected applicants ?')){
-            var action = '{{ url('/branchadmin/jobs/application/groupMeeting') }}';
+            var action = '<?php echo e(url('/branchadmin/jobs/application/groupMeeting')); ?>';
             $('#testform_writtenexam').attr('action', action);
             $('#testform_writtenexam').submit();
 
@@ -605,7 +611,7 @@ Selected Application for Written Exam
     };
  function confirm_delete(ids){
     if(confirm('Do You Want To Delete This Employee?')){
-      var url= "{{ url('/branchadmin/jobs/written/delete/') }}"+ids;
+      var url= "<?php echo e(url('/branchadmin/jobs/written/delete/')); ?>"+ids;
       location = url;
       
       }
@@ -614,7 +620,7 @@ Selected Application for Written Exam
   function confirm_update(){
 
   if(confirm('Are you sure you want to Shortlisted selected applicants for Written Exam?')){
-      var action = '{{ url('/branchadmin/jobs/update_written') }}';
+      var action = '<?php echo e(url('/branchadmin/jobs/update_written')); ?>';
       $('#testform_writtenexam').attr('action', action);
       $('#testform_writtenexam').submit();
       
@@ -627,7 +633,7 @@ Selected Application for Written Exam
    var filter_id = $('#filter_id').val();
    var filter_symbol_no = $('#filter_symbol_no').val();
   
-    var url= "{{ url('/branchadmin/jobs/written/'.$datas['job_id'].'?') }}";
+    var url= "<?php echo e(url('/branchadmin/jobs/written/'.$datas['job_id'].'?')); ?>";
    if (filter_name != '') {
       url += '&filter_name='+filter_name;
    }
@@ -654,4 +660,5 @@ $(function() {
 
 
 </script>
-@stop()
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('branchadmin_master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -54,7 +54,12 @@ return [
     |
     */
 
-    'from' => ['address' => 'purna.dangal@outlook.com', 'name' => 'purna dangal'],
+//    'from' => ['address' => 'purna.dangal@outlook.com', 'name' => 'purna dangal'],
+
+    'from' => [
+        'address' => env('MAIL_FROM_ADDRESS', 'depeshkhatiwada@gmail.com'),
+        'name' => env('MAIL_FROM_NAME', 'Dipesh Khatiwada'),
+    ],
 
     /*
     |--------------------------------------------------------------------------
