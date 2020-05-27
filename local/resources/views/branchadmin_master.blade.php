@@ -111,6 +111,11 @@
             <i class="fa fa-clipboard"></i> <span>Job Post</span>
           </a>
         </li>
+        <li>
+          <a href="{{ url('/branchadmin/calendar') }}">
+            <i class="fa fa-clipboard"></i> <span>Calendar</span>
+          </a>
+        </li>
       </ul>
     </li>
   </ul>

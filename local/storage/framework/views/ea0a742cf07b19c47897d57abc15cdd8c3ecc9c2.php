@@ -389,7 +389,7 @@ Selected Application for Final Selection
                 <form class="form-horizontal" role="form" id="meeting_zoom" method="POST" action="<?php echo e(url('/branchadmin/jobs/meeting_call')); ?>">
                     <?php echo csrf_field(); ?>
 
-                    <input type="hidden" name="jobs_id" value="<?php echo e($datas['job_id']); ?>">
+                    <input type="hidden" name="job_id" value="<?php echo e($datas['job_id']); ?>">
                   <table class="table table-bordered table-hover">
                     <thead>
                       <tr>

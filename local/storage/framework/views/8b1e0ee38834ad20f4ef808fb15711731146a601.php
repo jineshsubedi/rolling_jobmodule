@@ -112,6 +112,11 @@
             <i class="fa fa-clipboard"></i> <span>Job Post</span>
           </a>
         </li>
+        <li>
+          <a href="<?php echo e(url('/branchadmin/calendar')); ?>">
+            <i class="fa fa-clipboard"></i> <span>Calendar</span>
+          </a>
+        </li>
       </ul>
     </li>
   </ul>

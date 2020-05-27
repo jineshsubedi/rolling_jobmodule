@@ -32,6 +32,8 @@ Route::group(['prefix' => 'branchadmin', 'middleware' => ['web']], function () {
     Route::group(['middleware' =>['branchadmin']], function(){
         //jobs
         Route::resource('job_level','branchadmin\JobLevelController');
+        Route::resource('calendar','branchadmin\CalendarController');
+        Route::get('oauth2callback', 'branchadmin\CalendarController@oauth2callback')->name('oauth2callback');
         Route::resource('job_location','branchadmin\JobLocationController');
         Route::resource('recruitment_process','branchadmin\RprocessController');
 
