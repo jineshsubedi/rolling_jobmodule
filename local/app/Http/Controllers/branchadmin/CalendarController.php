@@ -163,35 +163,79 @@ class CalendarController extends Controller
 
     public function edit($id)
     {
-        $datas = JobLevel::find($id);
-       if($datas) {
-            return view('branchadmin.calendar.editform')->with('data',$datas);
+        @session_start();
+        if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
+            $this->client->setAccessToken($_SESSION['access_token']);
+            $service = new Google_Service_Calendar($this->client);
+            $datas = $service->events->get('primary', $id);
+//            dd($results);
+//            $datas=$results->getItems();
+            if($datas) {
+                return view('branchadmin.calendar.editform')->with('data',$datas);
+            } else {
+                \Session::flash('alert-danger','You choosed wrong Data');
+                return redirect()->route('branchadmin.calendar.index');
+            }
         } else {
-            \Session::flash('alert-danger','You choosed wrong Data');
-            return redirect()->route('branchadmin.calendar.index');
+            return redirect()->route('oauth2callback');
         }
+//        $datas = JobLevel::find($id);
+//       if($datas) {
+//            return view('branchadmin.calendar.editform')->with('data',$datas);
+//        } else {
+//            \Session::flash('alert-danger','You choosed wrong Data');
+//            return redirect()->route('branchadmin.calendar.index');
+//        }
     }
     public function update($id, Request $request)
     {
         $v= Validator::make($request->all(),
         [
-            'name' => 'required|min:3||unique:calendar,name,'.$request->id.',id',
+            'title' => 'required|min:3',
         ]);
         if($v->fails())
         {
             return redirect()->back()->withErrors($v);
-        } else 
-            {
-                $user= JobLevel::where('id',$id)->update(['name' => $request->name,'sortOrder' => $request->sortOrder]);
-                if($user)
-                {
-                    \Session::flash('alert-success','Record have been updated Successfully');
+        } else {
+            @session_start();
+            if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
+                $this->client->setAccessToken($_SESSION['access_token']);
+                $service = new Google_Service_Calendar($this->client);
+
+                $startDateTime=$request->start_date.'T'.$request->start_time.':00Z';
+                $endDateTime=$request->end_date.'T'.$request->end_time.':00Z';
+
+                // retrieve the event from the API.
+                $event = $service->events->get('primary', $id);
+
+                $event->setSummary($request->title);
+
+                $event->setDescription($request->description);
+
+                //start time
+                $start = new Google_Service_Calendar_EventDateTime();
+                $start->setDateTime($startDateTime);
+                $event->setStart($start);
+
+                //end time
+                $end = new Google_Service_Calendar_EventDateTime();
+                $end->setDateTime($endDateTime);
+                $event->setEnd($end);
+
+                $updatedEvent = $service->events->update('primary', $event->getId(), $event);
+
+                if ($updatedEvent) {
+                    \Session::flash('alert-success', 'Record have been saved Successfully');
+                    return redirect()->route('branchadmin.calendar.index');
+
+                } else {
+                    \Session::flash('alert-danger', 'Something Went Wrong on Saving Data');
                     return redirect()->route('branchadmin.calendar.index');
                 }
-                else {
-                    \Session::flash('alert-danger','Something Went Wrong on Updating Data');
-                    return redirect()->route('branchadmin.calendar.index');
-                }
+
+            } else {
+                return redirect()->route('oauth2callback');
             }
+        }
     }
 }
