@@ -168,8 +168,9 @@ return [
         FarhanWazir\GoogleMaps\GMapsServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
-        
-       
+        App\Providers\GoogleDriveServiceProvider::class,
+
+
 
     ],
 

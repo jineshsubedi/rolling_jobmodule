@@ -117,6 +117,11 @@
             <i class="fa fa-clipboard"></i> <span>Calendar</span>
           </a>
         </li>
+        <li>
+          <a href="<?php echo e(url('/branchadmin/drive')); ?>">
+            <i class="fa fa-clipboard"></i> <span>Drive</span>
+          </a>
+        </li>
       </ul>
     </li>
   </ul>

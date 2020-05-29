@@ -17,9 +17,14 @@ Carbon::setWeekendDays([Carbon::SATURDAY]);
 |
 */
 //URL::forceSchema('https');
+use Illuminate\Http\Request;
 
 
-
+//Route::post('/upload', function (Request $request) {
+//    // dd($request->file("documents"));
+//    // dd
+//    dd($request->file("document")->store("1uSA386lPj6eHGH_fzj0iuphouozGi66p","google"));
+//})->name("upload");
     
 Route::group(['prefix' => 'supervisor', 'middleware' => ['web']], function () {
     
@@ -28,12 +33,13 @@ Route::group(['prefix' => 'supervisor', 'middleware' => ['web']], function () {
 Route::group(['prefix' => 'branchadmin', 'middleware' => ['web']], function () {
 
     Route::post('/getfaculty', 'branchadmin\BranchAdminController@getFaculty');
+    Route::get('oauth2callback', 'branchadmin\CalendarController@oauth2callback')->name('oauth2callback');
 
-    Route::group(['middleware' =>['branchadmin']], function(){
+    Route::group(['middleware' =>['branchadmin'], 'as' => 'branchadmin.'], function(){
         //jobs
         Route::resource('job_level','branchadmin\JobLevelController');
         Route::resource('calendar','branchadmin\CalendarController');
-        Route::get('oauth2callback', 'branchadmin\CalendarController@oauth2callback')->name('oauth2callback');
+        Route::resource('drive','branchadmin\GoogleDriveController');
         Route::resource('job_location','branchadmin\JobLocationController');
         Route::resource('recruitment_process','branchadmin\RprocessController');
 

@@ -116,6 +116,11 @@
             <i class="fa fa-clipboard"></i> <span>Calendar</span>
           </a>
         </li>
+        <li>
+          <a href="{{ url('/branchadmin/drive') }}">
+            <i class="fa fa-clipboard"></i> <span>Drive</span>
+          </a>
+        </li>
       </ul>
     </li>
   </ul>
