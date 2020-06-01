@@ -40,6 +40,9 @@ Route::group(['prefix' => 'branchadmin', 'middleware' => ['web']], function () {
         Route::resource('job_level','branchadmin\JobLevelController');
         Route::resource('calendar','branchadmin\CalendarController');
         Route::resource('drive','branchadmin\GoogleDriveController');
+        Route::get('trash', 'branchadmin\GoogleDriveController@trash')->name('drive.trash');
+        Route::get('drive/{id}/restore', 'branchadmin\GoogleDriveController@restore');
+        Route::delete('drive/{id}/delete', 'branchadmin\GoogleDriveController@delete')->name('drive.delete');;
         Route::resource('job_location','branchadmin\JobLocationController');
         Route::resource('recruitment_process','branchadmin\RprocessController');
 

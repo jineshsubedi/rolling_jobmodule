@@ -14,7 +14,7 @@ Job Level
     <div class="col-xs-12">
       <div class="row">
           <a href="<?php echo e(route('branchadmin.drive.create')); ?>" class="btn btn-primary right"><i class="fa fa-fw fa-plus"></i>Add New Document to File</a>
-          <a href="<?php echo e(route('branchadmin.drive.trash')); ?>" class="btn btn-danger right"><i class="fa fa-trash"></i>Trash</a>
+          <a href="<?php echo e(route('branchadmin.drive.index')); ?>" class="btn btn-primary right"><i class="fa fa-list"></i>Back to index</a>
       </div>
      
       <div class="box">
@@ -37,12 +37,12 @@ Job Level
                                   <a href="<?php echo e($row->webViewLink); ?>"><?php echo e($row->name); ?></a>
                               </td>
                         <td>
-                          <form action="<?php echo e(route('branchadmin.drive.destroy', $row->id)); ?>" method="post">
+                          <form action="<?php echo e(route('branchadmin.drive.delete', $row->id)); ?>" method="post">
                               <?php echo csrf_field(); ?>
 
                               <?php echo method_field('DELETE'); ?>
 
-
+                              <a href="<?php echo e(url('/branchadmin/drive/'.$row->id.'/restore/')); ?>"  onclick="return confirm('Are you sure you want to restore?');" class="btn btn-primary left"><i class="fa fa-recycle"></i></a>
                               <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?');"><i class="fa fa-fw fa-remove"></i></button>
                           </form>
                         </td>
