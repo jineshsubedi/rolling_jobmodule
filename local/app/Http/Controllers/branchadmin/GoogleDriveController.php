@@ -142,16 +142,16 @@ class GoogleDriveController extends Controller
     public function restore($id)
     {
         try {
-            dd($this->drive);
-            $val= $this->drive->files->untrash('1r5n576zkVVFx8bGeHYTrs1tm2NEiLeb_');
-            dd($val);
+//            dd($this->drive);
+//            $val= $this->drive->files->untrash('1r5n576zkVVFx8bGeHYTrs1tm2NEiLeb_');
+//            dd($val);
 
-//            $results = $this->drive->files->get('1r5n576zkVVFx8bGeHYTrs1tm2NEiLeb_');
+            $results = $this->drive->files->get('1r5n576zkVVFx8bGeHYTrs1tm2NEiLeb_');
 //            $results.setTrashed(true);
 
 //            rescueFile
 //            $results.setTrashed(false);
-//            dd($results);
+            dd($results);
 
 //            getFiles
 
