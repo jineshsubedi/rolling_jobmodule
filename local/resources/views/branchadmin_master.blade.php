@@ -121,6 +121,11 @@
             <i class="fa fa-clipboard"></i> <span>Drive</span>
           </a>
         </li>
+        <li>
+          <a href="{{ url('/branchadmin/gmail') }}">
+            <i class="fa fa-clipboard"></i> <span>Gmail</span>
+          </a>
+        </li>
       </ul>
     </li>
   </ul>

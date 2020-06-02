@@ -170,6 +170,8 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
         App\Providers\GoogleDriveServiceProvider::class,
 
+        Dacastro4\LaravelGmail\LaravelGmailServiceProvider::class,
+
 
 
     ],
@@ -222,6 +224,7 @@ return [
         'QrCode'    => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
         'Excel'     => Maatwebsite\Excel\Facades\Excel::class,
         'GMaps'     => FarhanWazir\GoogleMaps\Facades\GMapsFacade::class,
+        'LaravelGmail' => Dacastro4\LaravelGmail\Facade\LaravelGmail::class,
         
 
 

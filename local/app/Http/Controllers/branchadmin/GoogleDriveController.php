@@ -11,6 +11,7 @@ use Google_Service_Calendar_EventDateTime;
 use Google_Service_Drive_DriveFile;
 use Google_Service_Books;
 use App\Http\Requests;
+use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use Validator;
 use App\JobLevel;
@@ -32,11 +33,9 @@ class GoogleDriveController extends Controller
     public function __construct(Google_Client $client)
     {
         $this->middleware(function ($request, $next) use ($client) {
-            // dd(\Config::get('filesystems.disks.google.refreshToken'));
             $client->setAuthConfig('drivecredential.json');
             $client->refreshToken(\Config::get('filesystems.disks.google.refreshToken'));
             $client->addScope(Google_Service_Drive::DRIVE);
-//            $this->drive = new Google_Service_Books($client);
             $this->drive = new \Google_Service_Drive($client);
             return $next($request);
         });
@@ -97,27 +96,7 @@ class GoogleDriveController extends Controller
 //            dd();
         }
     }
-//    public function show($id)
-//    {
-//        if($id)
-//        {
-//            $data= \Storage::disk('google')->url($id);
-//            if ($data == true) {
-//                return view('branchadmin.drive.show')->with('data',$data);
-//
-////                \Session::flash('alert-success','Data successfully deleted from drive');
-////                return redirect()->route('branchadmin.drive.index');
-//            } else {
-//                \Session::flash('alert-danger','Drive accessed failed ');
-//                return redirect()->route('branchadmin.drive.index');
-//            }
-//        }
-//        else
-//        {
-//            \Session::flash('alert-danger','Invalid Request');
-//            return redirect()->route('branchadmin.drive.index');
-//        }
-//    }
+
     public function destroy($id)
     {
         if($id)
@@ -142,23 +121,11 @@ class GoogleDriveController extends Controller
     public function restore($id)
     {
         try {
-//            dd($this->drive);
-//            $val= $this->drive->files->untrash('1r5n576zkVVFx8bGeHYTrs1tm2NEiLeb_');
-//            dd($val);
-
-            $results = $this->drive->files->get('1r5n576zkVVFx8bGeHYTrs1tm2NEiLeb_');
-//            $results.setTrashed(true);
-
-//            rescueFile
-//            $results.setTrashed(false);
-            dd($results);
-
-//            getFiles
-
-//            .setTrashed(false)
-//dd($this->drive);
-//            $this->drive->files->update('1r5n576zkVVFx8bGeHYTrs1tm2NEiLeb_',$results,['trashed'=>false]);
-//            $this->drive->files->untrash('1r5n576zkVVFx8bGeHYTrs1tm2NEiLeb_');
+            $copiedFile = new Google_Service_Drive_DriveFile();
+            $results = $this->drive->files->get($id);
+            $copiedFile->setName($results->name);
+            $this->drive->files->copy($id, $copiedFile);
+            $this->drive->files->delete($id);
             \Session::flash('alert-success', 'Valid Request');
             return redirect()->route('branchadmin.drive.index');
         } catch (Exception $e) {

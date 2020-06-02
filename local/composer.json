@@ -16,7 +16,8 @@
         "ext-curl": "*",
         "ext-json": "*",
         "google/apiclient": "2.0",
-        "nao-pon/flysystem-google-drive": "^1.1"
+        "nao-pon/flysystem-google-drive": "^1.1",
+        "dacastro4/laravel-gmail": "^2.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -33,19 +33,19 @@ Selected Application for Final Selection
                 <div class="row">
             <div class="col-xs-12">
             <div class="alert alert-danger">
-             <?php foreach($errors->all() as $error): ?>
+             <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
               <?php echo e('* : '.$error); ?></br>
-             <?php endforeach; ?>
+             <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
                 </div>
             </div>
 
           </div>
        <?php endif; ?>
-<?php /* <?php if(Auth::guard('employer')->user()->user_type === 1): ?> */ ?>
+
 <link rel="stylesheet" href="<?php echo e(asset('/assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')); ?>">
 <script src="<?php echo e(asset('assets/ckeditor/ckeditor.js')); ?>"></script>
-<?php /*                meeting view*/ ?>
-                <?php foreach($datas['meeting'] as $meeting ): ?>
+
+                <?php $__currentLoopData = $datas['meeting']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $meeting): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
                     <div class="row bg bg-success">
                         <div class="col-md-6 ">
                             <h5>Topic: <?php echo e($meeting->topic); ?></h5>
@@ -60,9 +60,9 @@ Selected Application for Final Selection
                             </h5>
                             <span>Participant Id :<?php echo e($meeting->employee_id); ?>
 
-<?php /*                                <?php foreach(json_decode() as $emp_id): ?>*/ ?>
-<?php /*                                    <?php echo e($emp_id); ?>*/ ?>
-<?php /*                                <?php endforeach; ?>*/ ?>
+
+
+
 
 
                             </span>
@@ -71,7 +71,7 @@ Selected Application for Final Selection
                     </div>
                     <hr>
 
-                <?php endforeach; ?>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
 
 
    <div class="row">
@@ -105,13 +105,13 @@ Selected Application for Final Selection
                                 <label class="label-control required col-md-2 text-center">Job Status</label>
                                 <div class="col-md-10">
                                     <select class="form-control" name="status">
-                                        <?php foreach($datas['process_status'] as $status): ?>
+                                        <?php $__currentLoopData = $datas['process_status']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $status): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
                                         <?php if($datas['status'] == $status->id): ?>
                                         <option selected="selected" value="<?php echo e($status->id); ?>"><?php echo e($status->title); ?></option>
                                         <?php else: ?>
                                         <option value="<?php echo e($status->id); ?>"><?php echo e($status->title); ?></option>
                                         <?php endif; ?>
-                                        <?php endforeach; ?>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
                                     </select>
                                 </div>
                             </div>
@@ -385,7 +385,7 @@ Selected Application for Final Selection
     $('#textarea').wysihtml5()
   })
 </script>
-<?php /* <?php endif; ?> */ ?>
+
                 <form class="form-horizontal" role="form" id="meeting_zoom" method="POST" action="<?php echo e(url('/branchadmin/jobs/meeting_call')); ?>">
                     <?php echo csrf_field(); ?>
 
@@ -440,19 +440,19 @@ Selected Application for Final Selection
 
                                 <li><a href="<?php echo e(url('branchadmin/jobs/tab5/'.$datas['job_id'].'/callmeeting/'.$row->id)); ?>" class="btn btn-default btn-xs" title="Create Zoom Meeting"><i class="fa fa-file"></i>Create Meeting</a></li>
                                 <li><a href="<?php echo e(url('branchadmin/jobs/application/view/'.$row->id)); ?>" class="btn btn-default btn-xs" title="view"><i class="fa fa-eye"></i>View</a></li>
-                                <?php /* <?php if(Auth::guard('employer')->user()->user_type === 1): ?> */ ?>
+                                
                             <li><a href="<?php echo e(url('branchadmin/jobs/file_upload/'.$row->id.'/'.$datas['job_id'])); ?>" class="btn btn-default btn-xs" title="view"><i class="fa fa-upload"></i>Upload Documents</a></li>
                             <li><a href="javascript:void(0);" onClick="confirm_delete('/<?php echo e($row->id); ?>')" class="btn btn-danger btn-xs" title="Delete Invoice"><i class="fa fa-fw fa-remove"></i>Delete</a></li>
-                             <?php foreach($files as $file): ?>
+                             <?php $__currentLoopData = $files; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $file): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
                             <li><a href="<?php echo e(asset('/image/'.$file->file_location)); ?>" class="btn btn-default" title="<?php echo e($file->title); ?>" download="download"><i class="fa fa-download"></i><?php echo e($file->title); ?></a></li>
-                            <?php endforeach; ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
                              <?php if($strategic != ''): ?>  
                             <li><a href="<?php echo e($strategic); ?>" class="btn btn-default" title="Download Strategic Paper" download="download"><i class="fa fa-download"></i>Strategic Paper</a></li>
                             <?php endif; ?> 
                             <?php if($presentation != ''): ?>  
                             <li><a href="<?php echo e($presentation); ?>" class="btn btn-default" title="Download Presentation" download="download"><i class="fa fa-download"></i>Presentation</a></li>
                             <?php endif; ?>
-                            <?php /* <?php endif; ?> */ ?>
+                            
                             
                             </ul>
                             </div></td>

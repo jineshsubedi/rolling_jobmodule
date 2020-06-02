@@ -162,6 +162,74 @@
         ]
     },
     {
+        "name": "dacastro4/laravel-gmail",
+        "version": "v2.0.4",
+        "version_normalized": "2.0.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/dacastro4/laravel-gmail.git",
+            "reference": "f52f30e6c61f0a9f3ace79567aee594f4f902222"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/dacastro4/laravel-gmail/zipball/f52f30e6c61f0a9f3ace79567aee594f4f902222",
+            "reference": "f52f30e6c61f0a9f3ace79567aee594f4f902222",
+            "shasum": ""
+        },
+        "require": {
+            "google/apiclient": "^2.0",
+            "illuminate/auth": "~5.0|~5.1|~5.2|~5.3",
+            "illuminate/config": "~5.0|~5.1|~5.2|~5.3",
+            "illuminate/database": "~5.0|~5.1|~5.2|~5.3",
+            "illuminate/routing": "~5.0|~5.1|~5.2|~5.3",
+            "illuminate/session": "~5.0|~5.1|~5.2|~5.3",
+            "illuminate/support": "~5.0|~5.1|~5.2|~5.3",
+            "php": ">=5.6",
+            "swiftmailer/swiftmailer": "~5.1|~5.4|~6.0"
+        },
+        "require-dev": {
+            "mockery/mockery": "~0.9",
+            "orchestra/testbench": "~3.5",
+            "phpunit/phpunit": "~6.5",
+            "squizlabs/php_codesniffer": "~2.0"
+        },
+        "time": "2019-08-13T14:36:00+00:00",
+        "type": "library",
+        "extra": {
+            "laravel": {
+                "providers": [
+                    "Dacastro4\\LaravelGmail\\LaravelGmailServiceProvider"
+                ],
+                "aliases": {
+                    "LaravelGmail": "Dacastro4\\LaravelGmail\\Facade\\LaravelGmail"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Dacastro4\\LaravelGmail\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Daniel Castro",
+                "email": "danielcastro04@gmail.com",
+                "homepage": "https://danielcastro.me"
+            }
+        ],
+        "description": "Gmail API package for Laravel",
+        "keywords": [
+            "api",
+            "gmail",
+            "laravel"
+        ]
+    },
+    {
         "name": "dnoegel/php-xdg-base-dir",
         "version": "0.1",
         "version_normalized": "0.1.0.0",
@@ -198,17 +266,17 @@
     },
     {
         "name": "doctrine/inflector",
-        "version": "1.4.2",
-        "version_normalized": "1.4.2.0",
+        "version": "1.4.3",
+        "version_normalized": "1.4.3.0",
         "source": {
             "type": "git",
             "url": "https://github.com/doctrine/inflector.git",
-            "reference": "889b42b8155f2aa274596b6e0424371b1e3c51bb"
+            "reference": "4650c8b30c753a76bf44fb2ed00117d6f367490c"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/doctrine/inflector/zipball/889b42b8155f2aa274596b6e0424371b1e3c51bb",
-            "reference": "889b42b8155f2aa274596b6e0424371b1e3c51bb",
+            "url": "https://api.github.com/repos/doctrine/inflector/zipball/4650c8b30c753a76bf44fb2ed00117d6f367490c",
+            "reference": "4650c8b30c753a76bf44fb2ed00117d6f367490c",
             "shasum": ""
         },
         "require": {
@@ -221,7 +289,7 @@
             "phpstan/phpstan-strict-rules": "^0.11",
             "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0"
         },
-        "time": "2020-05-25T20:02:40+00:00",
+        "time": "2020-05-29T07:19:59+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -278,21 +346,21 @@
     },
     {
         "name": "doctrine/instantiator",
-        "version": "1.3.0",
-        "version_normalized": "1.3.0.0",
+        "version": "1.3.1",
+        "version_normalized": "1.3.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/doctrine/instantiator.git",
-            "reference": "ae466f726242e637cebdd526a7d991b9433bacf1"
+            "reference": "f350df0268e904597e3bd9c4685c53e0e333feea"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/doctrine/instantiator/zipball/ae466f726242e637cebdd526a7d991b9433bacf1",
-            "reference": "ae466f726242e637cebdd526a7d991b9433bacf1",
+            "url": "https://api.github.com/repos/doctrine/instantiator/zipball/f350df0268e904597e3bd9c4685c53e0e333feea",
+            "reference": "f350df0268e904597e3bd9c4685c53e0e333feea",
             "shasum": ""
         },
         "require": {
-            "php": "^7.1"
+            "php": "^7.1 || ^8.0"
         },
         "require-dev": {
             "doctrine/coding-standard": "^6.0",
@@ -303,7 +371,7 @@
             "phpstan/phpstan-shim": "^0.11",
             "phpunit/phpunit": "^7.0"
         },
-        "time": "2019-10-21T16:45:58+00:00",
+        "time": "2020-05-29T17:27:14+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -614,17 +682,17 @@
     },
     {
         "name": "google/apiclient-services",
-        "version": "v0.137",
-        "version_normalized": "0.137.0.0",
+        "version": "v0.138",
+        "version_normalized": "0.138.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/googleapis/google-api-php-client-services.git",
-            "reference": "92ae53e812037230b23d373bac12516f90c330cc"
+            "reference": "9e7ea08fbd87e5926d14ef0674626e26843a5508"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/92ae53e812037230b23d373bac12516f90c330cc",
-            "reference": "92ae53e812037230b23d373bac12516f90c330cc",
+            "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/9e7ea08fbd87e5926d14ef0674626e26843a5508",
+            "reference": "9e7ea08fbd87e5926d14ef0674626e26843a5508",
             "shasum": ""
         },
         "require": {
@@ -633,7 +701,7 @@
         "require-dev": {
             "phpunit/phpunit": "^4.8|^5"
         },
-        "time": "2020-05-25T00:24:28+00:00",
+        "time": "2020-05-31T00:25:32+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -3281,17 +3349,17 @@
     },
     {
         "name": "sabberworm/php-css-parser",
-        "version": "8.3.0",
-        "version_normalized": "8.3.0.0",
+        "version": "8.3.1",
+        "version_normalized": "8.3.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/sabberworm/PHP-CSS-Parser.git",
-            "reference": "91bcc3e3fdb7386c9a2e0e0aa09ca75cc43f121f"
+            "reference": "d217848e1396ef962fb1997cf3e2421acba7f796"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/sabberworm/PHP-CSS-Parser/zipball/91bcc3e3fdb7386c9a2e0e0aa09ca75cc43f121f",
-            "reference": "91bcc3e3fdb7386c9a2e0e0aa09ca75cc43f121f",
+            "url": "https://api.github.com/repos/sabberworm/PHP-CSS-Parser/zipball/d217848e1396ef962fb1997cf3e2421acba7f796",
+            "reference": "d217848e1396ef962fb1997cf3e2421acba7f796",
             "shasum": ""
         },
         "require": {
@@ -3301,7 +3369,7 @@
             "codacy/coverage": "^1.4",
             "phpunit/phpunit": "~4.8"
         },
-        "time": "2019-02-22T07:42:52+00:00",
+        "time": "2020-06-01T09:10:00+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -4068,17 +4136,17 @@
     },
     {
         "name": "symfony/event-dispatcher",
-        "version": "v3.4.40",
-        "version_normalized": "3.4.40.0",
+        "version": "v3.4.41",
+        "version_normalized": "3.4.41.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/event-dispatcher.git",
-            "reference": "9d4e22943b73acc1ba50595b7de1a01fe9dbad48"
+            "reference": "14d978f8e8555f2de719c00eb65376be7d2e9081"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/9d4e22943b73acc1ba50595b7de1a01fe9dbad48",
-            "reference": "9d4e22943b73acc1ba50595b7de1a01fe9dbad48",
+            "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/14d978f8e8555f2de719c00eb65376be7d2e9081",
+            "reference": "14d978f8e8555f2de719c00eb65376be7d2e9081",
             "shasum": ""
         },
         "require": {
@@ -4098,7 +4166,7 @@
             "symfony/dependency-injection": "",
             "symfony/http-kernel": ""
         },
-        "time": "2020-03-15T09:38:08+00:00",
+        "time": "2020-05-05T15:06:23+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {

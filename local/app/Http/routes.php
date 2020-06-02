@@ -5,7 +5,11 @@ session_start();
 Carbon::setWeekendDays([Carbon::SATURDAY]);
         Carbon::setWeekStartsAt(Carbon::SUNDAY);
         Carbon::setWeekEndsAt(Carbon::SATURDAY);
-
+if (version_compare(PHP_VERSION, '7.2.0', '>=')) {
+// Ignores notices and reports all other kinds... and warnings
+    error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+// error_reporting(E_ALL ^ E_WARNING); // Maybe this is enough
+}
 /*
 |--------------------------------------------------------------------------
 | Routes File
@@ -29,6 +33,22 @@ use Illuminate\Http\Request;
 Route::group(['prefix' => 'supervisor', 'middleware' => ['web']], function () {
     
 });
+// gmail testing
+Route::get('gmail', 'branchadmin\GmailController@index')->name('gmail');
+
+Route::get('/oauth/gmail', function (){
+    return \Dacastro4\LaravelGmail\Facade\LaravelGmail::redirect();
+});
+
+Route::get('/oauth/gmail/callback', function (){
+    \Dacastro4\LaravelGmail\Facade\LaravelGmail::makeToken();
+    return redirect()->to('/branchadmin/jobs');
+});
+
+Route::get('/oauth/gmail/logout', function (){
+    \Dacastro4\LaravelGmail\Facade\LaravelGmail::logout(); //It returns exception if fails
+    return redirect()->to('/');
+});
 
 Route::group(['prefix' => 'branchadmin', 'middleware' => ['web']], function () {
 
@@ -42,7 +62,9 @@ Route::group(['prefix' => 'branchadmin', 'middleware' => ['web']], function () {
         Route::resource('drive','branchadmin\GoogleDriveController');
         Route::get('trash', 'branchadmin\GoogleDriveController@trash')->name('drive.trash');
         Route::get('drive/{id}/restore', 'branchadmin\GoogleDriveController@restore');
-        Route::delete('drive/{id}/delete', 'branchadmin\GoogleDriveController@delete')->name('drive.delete');;
+        Route::delete('drive/{id}/delete', 'branchadmin\GoogleDriveController@delete')->name('drive.delete');
+        Route::resource('gmail','branchadmin\GmailController');
+
         Route::resource('job_location','branchadmin\JobLocationController');
         Route::resource('recruitment_process','branchadmin\RprocessController');
 
