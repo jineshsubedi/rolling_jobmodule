@@ -18,7 +18,22 @@ class GmailController extends Controller
      *
      * @return void
      */
-   
+    public function __construct(){
+//        if(!LaravelGmail::check()){
+//            return 'login to continue';
+////            return redirect()->to('/oauth/gmail');
+//        }else{
+//            dd('rr');
+//        }
+//        if(LaravelGmail::isAccessTokenExpired()){
+//            LaravelGmail::fetchAccessTokenWithRefreshToken( LaravelGmail::getRefreshToken() );
+//            $token = LaravelGmail::getAccessToken();
+//            LaravelGmail::setAccessToken( $token );
+//            LaravelGmail::saveAccessToken( $token );
+////            dd('sa');
+//        }
+
+    }
     /**
      * Show the application dashboard.
      *
@@ -30,6 +45,17 @@ class GmailController extends Controller
 
         $messages = LaravelGmail::message()->in('INBOX')->preload()->all();
         return view('branchadmin.gmail.index')->with('data',$messages);
+    }
+    public function trash(Request $request)
+    {
+
+        $messages = LaravelGmail::message()->in('TRASH')->preload()->all();
+        return view('branchadmin.gmail.trash')->with('data',$messages);
+    }
+    public function sent(Request $request)
+    {
+        $messages = LaravelGmail::message()->in('SENT')->preload()->all();
+        return view('branchadmin.gmail.sent')->with('data',$messages);
     }
 
      public function create()
@@ -89,7 +115,7 @@ class GmailController extends Controller
             return view('branchadmin.gmail.show')->with('data',$datas);
         } else {
             \Session::flash('alert-danger','You choosed wrong Data');
-            return redirect()->route('branchadmin.job_level.index');
+            return redirect()->route('branchadmin.gmail.index');
         }
     }
 
@@ -97,48 +123,44 @@ class GmailController extends Controller
     {
         if($id)
         {
-            JobLevel::find($id)->delete();
+            $datas=LaravelGmail::message()->get( $id );
+            $datas->sendToTrash();
             \Session::flash('alert-success','Record deleted Successfully');
-            return redirect()->route('branchadmin.job_level.index');
+            return redirect()->route('branchadmin.gmail.index');
         }
         else 
         {
            \Session::flash('alert-danger','Something Went Wrong on Deleting data');
-            return redirect()->route('branchadmin.job_level.index'); 
+            return redirect()->route('branchadmin.gmail.index');
         }
+    }
+    public function restore($id)
+    {
+        if($id)
+        {
+            $datas=LaravelGmail::message()->get( $id );
+            $datas->addLabel('INBOX');
+            $datas->removeLabel('TRASH');
+            \Session::flash('alert-success','Record restored Successfully');
+            return redirect()->route('branchadmin.gmail.index');
+        }
+        else
+        {
+            \Session::flash('alert-danger','Something Went Wrong on Deleting data');
+            return redirect()->route('branchadmin.gmail.index');
+        }
+    }
+    public function delete($id)
+    {
+        try {
+            $datas=LaravelGmail::message()->get( $id );
+            $datas->removeFromTrash();
+            \Session::flash('alert-success','Request Success');
+            return redirect()->route('branchadmin.gmail.trash');
+        } catch (Exception $e) {
+            return false;
+        }
+
     }
 
-    public function edit($id)
-    {
-        $datas = JobLevel::find($id);
-       if($datas) {
-            return view('branchadmin.gmail.editform')->with('data',$datas);
-        } else {
-            \Session::flash('alert-danger','You choosed wrong Data');
-            return redirect()->route('branchadmin.job_level.index'); 
-        }
-    }
-    public function update($id, Request $request)
-    {
-        $v= Validator::make($request->all(),
-        [
-            'name' => 'required|min:3||unique:job_level,name,'.$request->id.',id',
-        ]);
-        if($v->fails())
-        {
-            return redirect()->back()->withErrors($v);
-        } else 
-            {
-                $user= JobLevel::where('id',$id)->update(['name' => $request->name,'sortOrder' => $request->sortOrder]);
-                if($user)
-                {
-                    \Session::flash('alert-success','Record have been updated Successfully');
-                    return redirect()->route('branchadmin.job_level.index');
-                }
-                else {
-                    \Session::flash('alert-danger','Something Went Wrong on Updating Data');
-                    return redirect()->route('branchadmin.job_level.index'); 
-                }
-            }
-    }
 }

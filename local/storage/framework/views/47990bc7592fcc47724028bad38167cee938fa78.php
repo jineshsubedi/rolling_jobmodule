@@ -11,9 +11,8 @@ Job Level
  <div class="row">
     <div class="col-xs-12">
       <div class="row">
-          <a href="<?php echo e(route('branchadmin.gmail.sent')); ?>" class="btn btn-primary"><i class="fa fa-list"></i>Send Mail</a>
+          <a href="<?php echo e(route('branchadmin.gmail.index')); ?>" class="btn btn-primary"><i class="fa fa-list"></i>Inbox</a>
           <a href="<?php echo e(route('branchadmin.gmail.create')); ?>" class="btn btn-primary right"><i class="fa fa-fw fa-plus"></i>Compose</a>
-          <a href="<?php echo e(route('branchadmin.gmail.trash')); ?>" class="btn btn-danger right"><i class="fa fa-trash"></i>Trash</a>
       </div>
      
       <div class="box">
@@ -31,27 +30,21 @@ Job Level
                       <?php $i=1; 
                         foreach ($data as $row) { ?>
                           <tr>
-                              <?php ($from = $row->getFrom()); ?>
-                              <?php if($row->getLabels()[0] == "UNREAD"): ?>
-                                  <td><?php echo $i++ ;?> (unread)</td>
-                                  <th><?php echo $from['name'];?> (<?php echo e($from['email']); ?>)</th>
-                                  <th><?php echo e($row->getSubject()); ?></th>
-                              <?php else: ?>
+
+                              <?php ($from = $row->getTo()); ?>
+
                                   <td><?php echo $i++ ;?></td>
-                                  <td><?php echo $from['name'];?> (<?php echo e($from['email']); ?>)</td>
+                                  <td><?php echo $from[0]['name'];?> (<?php echo e($from[0]['email']); ?>)</td>
                                   <td><?php echo e($row->getSubject()); ?></td>
-                              <?php endif; ?>
 
-                        <td>
-                          <form action="<?php echo e(route('branchadmin.gmail.destroy', $row->id)); ?>" method="post">
-                              <?php echo csrf_field(); ?>
 
-                              <?php echo method_field('DELETE'); ?>
 
-                              <a href="<?php echo e(route('branchadmin.gmail.show',$row->getId())); ?>" class="btn btn-primary left"><i class="fa fa-eye"></i></a>
-                              <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?');"><i class="fa fa-fw fa-remove"></i></button>
-                          </form>
-                        </td>
+
+
+
+
+
+
                       </tr>
                       <?php  }
                       ?>

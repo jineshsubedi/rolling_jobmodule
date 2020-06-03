@@ -42,12 +42,12 @@ Route::get('/oauth/gmail', function (){
 
 Route::get('/oauth/gmail/callback', function (){
     \Dacastro4\LaravelGmail\Facade\LaravelGmail::makeToken();
-    return redirect()->to('/branchadmin/jobs');
+    return redirect()->route('branchadmin.gmail.index');
 });
 
 Route::get('/oauth/gmail/logout', function (){
     \Dacastro4\LaravelGmail\Facade\LaravelGmail::logout(); //It returns exception if fails
-    return redirect()->to('/');
+    return redirect()->to('/branchadmin/jobs');
 });
 
 Route::group(['prefix' => 'branchadmin', 'middleware' => ['web']], function () {
@@ -63,6 +63,10 @@ Route::group(['prefix' => 'branchadmin', 'middleware' => ['web']], function () {
         Route::get('trash', 'branchadmin\GoogleDriveController@trash')->name('drive.trash');
         Route::get('drive/{id}/restore', 'branchadmin\GoogleDriveController@restore');
         Route::delete('drive/{id}/delete', 'branchadmin\GoogleDriveController@delete')->name('drive.delete');
+        Route::get('gmail/trash', 'branchadmin\GmailController@trash')->name('gmail.trash');
+        Route::get('gmail/{id}/restore', 'branchadmin\GmailController@restore');
+        Route::delete('gmail/{id}/delete', 'branchadmin\GmailController@delete')->name('gmail.delete');
+        Route::get('gmail/sent', 'branchadmin\GmailController@sent')->name('gmail.sent');
         Route::resource('gmail','branchadmin\GmailController');
 
         Route::resource('job_location','branchadmin\JobLocationController');

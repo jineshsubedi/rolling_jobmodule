@@ -12,9 +12,8 @@ Job Level
  <div class="row">
     <div class="col-xs-12">
       <div class="row">
-          <a href="{{ route('branchadmin.gmail.sent') }}" class="btn btn-primary"><i class="fa fa-list"></i>Send Mail</a>
+          <a href="{{ route('branchadmin.gmail.index') }}" class="btn btn-primary"><i class="fa fa-list"></i>Inbox</a>
           <a href="{{ route('branchadmin.gmail.create') }}" class="btn btn-primary right"><i class="fa fa-fw fa-plus"></i>Compose</a>
-          <a href="{{ route('branchadmin.gmail.trash') }}" class="btn btn-danger right"><i class="fa fa-trash"></i>Trash</a>
       </div>
      
       <div class="box">
@@ -32,25 +31,21 @@ Job Level
                       <?php $i=1; 
                         foreach ($data as $row) { ?>
                           <tr>
-                              @php($from = $row->getFrom())
-                              @if($row->getLabels()[0] == "UNREAD")
-                                  <td><?php echo $i++ ;?> (unread)</td>
-                                  <th><?php echo $from['name'];?> ({{$from['email']}})</th>
-                                  <th>{{$row->getSubject()}}</th>
-                              @else
-                                  <td><?php echo $i++ ;?></td>
-                                  <td><?php echo $from['name'];?> ({{$from['email']}})</td>
-                                  <td>{{$row->getSubject()}}</td>
-                              @endif
+{{--                              {{dd($row->getTo()[0]['email'])}}--}}
+                              @php($from = $row->getTo())
 
-                        <td>
-                          <form action="{{route('branchadmin.gmail.destroy', $row->id)}}" method="post">
-                              {!! csrf_field() !!}
-                              {!! method_field('DELETE') !!}
-                              <a href="{{route('branchadmin.gmail.show',$row->getId())}}" class="btn btn-primary left"><i class="fa fa-eye"></i></a>
-                              <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?');"><i class="fa fa-fw fa-remove"></i></button>
-                          </form>
-                        </td>
+                                  <td><?php echo $i++ ;?></td>
+                                  <td><?php echo $from[0]['name'];?> ({{$from[0]['email']}})</td>
+                                  <td>{{$row->getSubject()}}</td>
+
+{{--                        <td>--}}
+{{--                          <form action="{{route('branchadmin.gmail.destroy', $row->id)}}" method="post">--}}
+{{--                              {!! csrf_field() !!}--}}
+{{--                              {!! method_field('DELETE') !!}--}}
+{{--                              <a href="{{route('branchadmin.gmail.show',$row->getId())}}" class="btn btn-primary left"><i class="fa fa-eye"></i></a>--}}
+{{--                              <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?');"><i class="fa fa-fw fa-remove"></i></button>--}}
+{{--                          </form>--}}
+{{--                        </td>--}}
                       </tr>
                       <?php  }
                       ?>

@@ -12,9 +12,8 @@ Job Level
  <div class="row">
     <div class="col-xs-12">
       <div class="row">
-          <a href="{{ route('branchadmin.gmail.sent') }}" class="btn btn-primary"><i class="fa fa-list"></i>Send Mail</a>
           <a href="{{ route('branchadmin.gmail.create') }}" class="btn btn-primary right"><i class="fa fa-fw fa-plus"></i>Compose</a>
-          <a href="{{ route('branchadmin.gmail.trash') }}" class="btn btn-danger right"><i class="fa fa-trash"></i>Trash</a>
+          <a href="{{ route('branchadmin.gmail.index') }}" class="btn btn-danger right"><i class="fa fa-list"></i>Back to index</a>
       </div>
      
       <div class="box">
@@ -29,7 +28,14 @@ Job Level
                       </tr>
                     </thead>
                     <tbody>
-                      <?php $i=1; 
+                    @if(count($data)==0)
+                        <tr>
+                            <td></td>
+                            <td colspan="2"> <h1 class="bg bg-warning">No mail in Trash</h1></td>
+                            <td></td>
+                        </tr>
+                        @endif
+                      <?php $i=1;
                         foreach ($data as $row) { ?>
                           <tr>
                               @php($from = $row->getFrom())
@@ -44,10 +50,10 @@ Job Level
                               @endif
 
                         <td>
-                          <form action="{{route('branchadmin.gmail.destroy', $row->id)}}" method="post">
+                          <form action="{{route('branchadmin.gmail.delete', $row->getId())}}" method="post">
                               {!! csrf_field() !!}
                               {!! method_field('DELETE') !!}
-                              <a href="{{route('branchadmin.gmail.show',$row->getId())}}" class="btn btn-primary left"><i class="fa fa-eye"></i></a>
+                              <a href="{{ url('/branchadmin/gmail/'.$row->getId().'/restore/') }}"  onclick="return confirm('Are you sure you want to restore?');" class="btn btn-primary left"><i class="fa fa-recycle"></i></a>
                               <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?');"><i class="fa fa-fw fa-remove"></i></button>
                           </form>
                         </td>
