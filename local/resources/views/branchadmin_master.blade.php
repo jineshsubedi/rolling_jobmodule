@@ -126,6 +126,11 @@
             <i class="fa fa-clipboard"></i> <span>Gmail</span>
           </a>
         </li>
+        <li>
+          <a href="{{ url('/branchadmin/dropbox') }}">
+            <i class="fa fa-clipboard"></i> <span>Dropbox</span>
+          </a>
+        </li>
       </ul>
     </li>
   </ul>

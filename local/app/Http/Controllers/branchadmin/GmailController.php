@@ -42,9 +42,51 @@ class GmailController extends Controller
 
     public function index(Request $request)
     {
+        $messages=array();
+//        $gmailall = LaravelGmail::message()->in( $box = 'inbox' )->all();
+//        $inbox = count($gmailall);
+//        $access_token = LaravelGmail::getToken()['access_token'];
+//        $url = "https://www.googleapis.com/gmail/v1/users/me/";
+//        $message_url = $url."messages?maxResults=10&q=in:inbox&access_token=".$access_token."&pageToken=".$pageToken;
+//        $ch = curl_init();
+//        curl_setopt($ch, CURLOPT_URL, $message_url);
+//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+//        $gmails = json_decode(curl_exec($ch), true);
+//        $token = $access_token;
+//        dd($gmails);
+//        echo $token;
+//        dd('aa');
+//        $opt_param = array();
+//        dd(LaravelGmail::message()->listUsersMessages('me', $opt_param));
 
-        $messages = LaravelGmail::message()->in('INBOX')->preload()->all();
+//        $messages['inbox']= LaravelGmail::message()->take(10)->in('INBOX')->next();
+        $msg = LaravelGmail::message();
+        $messages['inbox'] = $msg->take(10)->in('INBOX')->all(); //gets first 10
+//        $msg->take(3)->in('INBOX')->all();
+//        $messages['inbox'] = $msg->take(3)->in('INBOX')->all('10586441687922781634');
+        $messages['inbox']->pageToken=$msg->pageToken;
+//        dd($messages);
+//        $messages['inbox']= $msg->next();
+//        dd($msg->next());
+//        dd(LaravelGmail::message()->getNextPageToken());
+
+        $messages['social'] = LaravelGmail::message()->in('SOCIAL')->all();
+
+        $messages['promotions'] = LaravelGmail::message()->in('PROMOTIONS')->all();
+
+//        dd($messages->pageToken);
+//        dd($messages);
         return view('branchadmin.gmail.index')->with('data',$messages);
+    }
+    public function page(Request $request,$id)
+    {
+        $messages=array();
+        $msg = LaravelGmail::message();
+        $messages['inbox'] = $msg->take(10)->in('INBOX')->all($id);
+        $messages['inbox']->pageToken=$msg->pageToken;
+        $messages['social'] = LaravelGmail::message()->in('SOCIAL')->all();
+        $messages['promotions'] = LaravelGmail::message()->in('PROMOTIONS')->all();
+        return view('branchadmin.gmail.page')->with('data',$messages);
     }
     public function trash(Request $request)
     {

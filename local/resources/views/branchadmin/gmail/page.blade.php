@@ -1,19 +1,20 @@
-<?php $__env->startSection('heading'); ?>
+@extends('branchadmin_master')
+@section('heading')
 Job Level
             <small>List of Job Level</small>
-<?php $__env->stopSection(); ?>
-<?php $__env->startSection('breadcrubm'); ?>
- <li><a href="<?php echo e(url('/branchadmin')); ?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+@stop
+@section('breadcrubm')
+ <li><a href="{{ url('/branchadmin') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             
             <li class="active">Job Level</li>
-<?php $__env->stopSection(); ?>
-<?php $__env->startSection('content'); ?>
+@stop
+@section('content')
  <div class="row">
     <div class="col-xs-12">
       <div class="row">
-          <a href="<?php echo e(route('branchadmin.gmail.sent')); ?>" class="btn btn-primary"><i class="fa fa-list"></i>Send Mail</a>
-          <a href="<?php echo e(route('branchadmin.gmail.create')); ?>" class="btn btn-primary right"><i class="fa fa-fw fa-plus"></i>Compose</a>
-          <a href="<?php echo e(route('branchadmin.gmail.trash')); ?>" class="btn btn-danger right"><i class="fa fa-trash"></i>Trash</a>
+          <a href="{{ route('branchadmin.gmail.sent') }}" class="btn btn-primary"><i class="fa fa-list"></i>Send Mail</a>
+          <a href="{{ route('branchadmin.gmail.create') }}" class="btn btn-primary right"><i class="fa fa-fw fa-plus"></i>Compose</a>
+          <a href="{{ route('branchadmin.gmail.trash') }}" class="btn btn-danger right"><i class="fa fa-trash"></i>Trash</a>
       </div>
      
       <div class="box">
@@ -43,26 +44,24 @@ Job Level
                         <?php $i=1;
                         foreach ($data['inbox'] as $row) { ?>
                         <tr>
-                            <?php ($message = $row->load()); ?>
+                            @php($message = $row->load())
 
-                            <?php ($from = $message->getFrom()); ?>
-                            <?php if($message->getLabels()[0] == "UNREAD"): ?>
-                                <td><?php echo $i++ ;?> (unread) <?php echo e($data['inbox']->pageToken); ?></td>
-                                <th><?php echo $from['name'];?> (<?php echo e($from['email']); ?>)</th>
-                                <th><?php echo e($message->getSubject()); ?></th>
-                            <?php else: ?>
+                            @php($from = $message->getFrom())
+                            @if($message->getLabels()[0] == "UNREAD")
+                                <td><?php echo $i++ ;?> (unread) {{$data['inbox']->pageToken}}</td>
+                                <th><?php echo $from['name'];?> ({{$from['email']}})</th>
+                                <th>{{$message->getSubject()}}</th>
+                            @else
                                 <td><?php echo $i++ ;?></td>
-                                <td><?php echo $from['name'];?> (<?php echo e($from['email']); ?>)</td>
-                                <td><?php echo e($message->getSubject()); ?></td>
-                            <?php endif; ?>
+                                <td><?php echo $from['name'];?> ({{$from['email']}})</td>
+                                <td>{{$message->getSubject()}}</td>
+                            @endif
 
                             <td>
-                                <form action="<?php echo e(route('branchadmin.gmail.destroy', $message->id)); ?>" method="post">
-                                    <?php echo csrf_field(); ?>
-
-                                    <?php echo method_field('DELETE'); ?>
-
-                                    <a href="<?php echo e(route('branchadmin.gmail.show',$message->getId())); ?>" class="btn btn-primary left"><i class="fa fa-eye"></i></a>
+                                <form action="{{route('branchadmin.gmail.destroy', $message->id)}}" method="post">
+                                    {!! csrf_field() !!}
+                                    {!! method_field('DELETE') !!}
+                                    <a href="{{route('branchadmin.gmail.show',$message->getId())}}" class="btn btn-primary left"><i class="fa fa-eye"></i></a>
                                     <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?');"><i class="fa fa-fw fa-remove"></i></button>
                                 </form>
                             </td>
@@ -70,8 +69,8 @@ Job Level
                         <?php  }
                         ?>
                         <tfooter>
-                        <th colspan="2"></th>
-                        <th colspan="2"><a href="<?php echo e(route('branchadmin.gmail.page', $data['inbox']->pageToken)); ?>" class="btn btn-primary">Next   &raquo;  </a></th>
+                        <th colspan="2"><a href="{{route('branchadmin.gmail.index')}}" class="btn btn-primary">  &laquo;   Back to First  </a></th>
+                        <th colspan="2"><a href="{{route('branchadmin.gmail.page', $data['inbox']->pageToken)}}" class="btn btn-primary">Next   &raquo;  </a></th>
                         </tfooter>
                     </table>
 
@@ -92,26 +91,24 @@ Job Level
                         <?php $i=1;
                         foreach ($data['social'] as $row) { ?>
                         <tr>
-                            <?php ($message = $row->load()); ?>
+                            @php($message = $row->load())
 
-                            <?php ($from = $message->getFrom()); ?>
-                            <?php if($message->getLabels()[1] == "UNREAD"): ?>
+                            @php($from = $message->getFrom())
+                            @if($message->getLabels()[1] == "UNREAD")
                                 <td><?php echo $i++ ;?> (unread)</td>
-                                <th><?php echo $from['name'];?> (<?php echo e($from['email']); ?>)</th>
-                                <th><?php echo e($message->getSubject()); ?></th>
-                            <?php else: ?>
+                                <th><?php echo $from['name'];?> ({{$from['email']}})</th>
+                                <th>{{$message->getSubject()}}</th>
+                            @else
                                 <td><?php echo $i++ ;?></td>
-                                <td><?php echo $from['name'];?> (<?php echo e($from['email']); ?>)</td>
-                                <td><?php echo e($message->getSubject()); ?></td>
-                            <?php endif; ?>
+                                <td><?php echo $from['name'];?> ({{$from['email']}})</td>
+                                <td>{{$message->getSubject()}}</td>
+                            @endif
 
                             <td>
-                                <form action="<?php echo e(route('branchadmin.gmail.destroy', $message->id)); ?>" method="post">
-                                    <?php echo csrf_field(); ?>
-
-                                    <?php echo method_field('DELETE'); ?>
-
-                                    <a href="<?php echo e(route('branchadmin.gmail.show',$message->getId())); ?>" class="btn btn-primary left"><i class="fa fa-eye"></i></a>
+                                <form action="{{route('branchadmin.gmail.destroy', $message->id)}}" method="post">
+                                    {!! csrf_field() !!}
+                                    {!! method_field('DELETE') !!}
+                                    <a href="{{route('branchadmin.gmail.show',$message->getId())}}" class="btn btn-primary left"><i class="fa fa-eye"></i></a>
                                     <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?');"><i class="fa fa-fw fa-remove"></i></button>
                                 </form>
                             </td>
@@ -137,26 +134,24 @@ Job Level
                         <?php $i=1;
                         foreach ($data['promotions'] as $row) { ?>
                         <tr>
-                            <?php ($message = $row->load()); ?>
+                            @php($message = $row->load())
 
-                            <?php ($from = $message->getFrom()); ?>
-                            <?php if($message->getLabels()[1] == "UNREAD"): ?>
+                            @php($from = $message->getFrom())
+                            @if($message->getLabels()[1] == "UNREAD")
                                 <td><?php echo $i++ ;?> (unread)</td>
-                                <th><?php echo $from['name'];?> (<?php echo e($from['email']); ?>)</th>
-                                <th><?php echo e($message->getSubject()); ?></th>
-                            <?php else: ?>
+                                <th><?php echo $from['name'];?> ({{$from['email']}})</th>
+                                <th>{{$message->getSubject()}}</th>
+                            @else
                                 <td><?php echo $i++ ;?></td>
-                                <td><?php echo $from['name'];?> (<?php echo e($from['email']); ?>)</td>
-                                <td><?php echo e($message->getSubject()); ?></td>
-                            <?php endif; ?>
+                                <td><?php echo $from['name'];?> ({{$from['email']}})</td>
+                                <td>{{$message->getSubject()}}</td>
+                            @endif
 
                             <td>
-                                <form action="<?php echo e(route('branchadmin.gmail.destroy', $message->id)); ?>" method="post">
-                                    <?php echo csrf_field(); ?>
-
-                                    <?php echo method_field('DELETE'); ?>
-
-                                    <a href="<?php echo e(route('branchadmin.gmail.show',$message->getId())); ?>" class="btn btn-primary left"><i class="fa fa-eye"></i></a>
+                                <form action="{{route('branchadmin.gmail.destroy', $message->id)}}" method="post">
+                                    {!! csrf_field() !!}
+                                    {!! method_field('DELETE') !!}
+                                    <a href="{{route('branchadmin.gmail.show',$message->getId())}}" class="btn btn-primary left"><i class="fa fa-eye"></i></a>
                                     <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?');"><i class="fa fa-fw fa-remove"></i></button>
                                 </form>
                             </td>
@@ -200,10 +195,9 @@ Job Level
   <script type="text/javascript">
     function confirm_delete(ids){
     if(confirm('Do You Want To Delete This joblevel?')){
-      var url = "<?php echo e(url('/branchadmin/gmail/"+ids+"/delete')); ?>";
+      var url = "{{url('/branchadmin/gmail/"+ids+"/delete')}}";
       location = url;
       }
     }
  </script>
-<?php $__env->stopSection(); ?>
-<?php echo $__env->make('branchadmin_master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+@stop()

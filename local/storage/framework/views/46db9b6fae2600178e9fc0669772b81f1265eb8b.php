@@ -70,7 +70,7 @@ Job Level
                         <?php  }
                         ?>
                         <tfooter>
-                        <th colspan="2"></th>
+                        <th colspan="2"><a href="<?php echo e(route('branchadmin.gmail.index')); ?>" class="btn btn-primary">  &laquo;   Back to First  </a></th>
                         <th colspan="2"><a href="<?php echo e(route('branchadmin.gmail.page', $data['inbox']->pageToken)); ?>" class="btn btn-primary">Next   &raquo;  </a></th>
                         </tfooter>
                     </table>

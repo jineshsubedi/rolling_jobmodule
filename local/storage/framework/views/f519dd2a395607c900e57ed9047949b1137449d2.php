@@ -11,7 +11,8 @@ Job Level
  <div class="row">
     <div class="col-xs-12">
       <div class="row">
-        <a href="<?php echo e(route('branchadmin.gmail.create')); ?>" class="btn btn-primary right"><i class="fa fa-fw fa-plus"></i>Compose</a>
+          <a href="<?php echo e(route('branchadmin.gmail.create')); ?>" class="btn btn-primary right"><i class="fa fa-fw fa-plus"></i>Compose</a>
+
       </div>
      
       <div class="box">

@@ -127,6 +127,11 @@
             <i class="fa fa-clipboard"></i> <span>Gmail</span>
           </a>
         </li>
+        <li>
+          <a href="<?php echo e(url('/branchadmin/dropbox')); ?>">
+            <i class="fa fa-clipboard"></i> <span>Dropbox</span>
+          </a>
+        </li>
       </ul>
     </li>
   </ul>

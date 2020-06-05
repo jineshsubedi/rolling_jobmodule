@@ -67,7 +67,9 @@ Route::group(['prefix' => 'branchadmin', 'middleware' => ['web']], function () {
         Route::get('gmail/{id}/restore', 'branchadmin\GmailController@restore');
         Route::delete('gmail/{id}/delete', 'branchadmin\GmailController@delete')->name('gmail.delete');
         Route::get('gmail/sent', 'branchadmin\GmailController@sent')->name('gmail.sent');
+        Route::get('gmail/page={id}', 'branchadmin\GmailController@page')->name('gmail.page');
         Route::resource('gmail','branchadmin\GmailController');
+        Route::resource('dropbox','branchadmin\DropboxController');
 
         Route::resource('job_location','branchadmin\JobLocationController');
         Route::resource('recruitment_process','branchadmin\RprocessController');
