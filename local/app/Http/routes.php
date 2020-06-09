@@ -69,6 +69,11 @@ Route::group(['prefix' => 'branchadmin', 'middleware' => ['web']], function () {
         Route::get('gmail/sent', 'branchadmin\GmailController@sent')->name('gmail.sent');
         Route::get('gmail/page={id}', 'branchadmin\GmailController@page')->name('gmail.page');
         Route::resource('gmail','branchadmin\GmailController');
+        Route::get('dropbox/folder/create', 'branchadmin\DropboxController@createfolder')->name('dropbox.createfolder');
+        Route::post('dropbox/folder/store', 'branchadmin\DropboxController@storefolder')->name('dropbox.storefolder');
+        Route::get('dropbox/folder/upload/{folder}', 'branchadmin\DropboxController@uploadinfolder')->name('dropbox.uploadinfolder');
+        Route::get('dropbox/folder/newfolder/{folder}', 'branchadmin\DropboxController@newfolder')->name('dropbox.newfolder');
+        Route::get('dropbox/folder/{id}', 'branchadmin\DropboxController@folder')->name('dropbox.openfolder');
         Route::resource('dropbox','branchadmin\DropboxController');
 
         Route::resource('job_location','branchadmin\JobLocationController');

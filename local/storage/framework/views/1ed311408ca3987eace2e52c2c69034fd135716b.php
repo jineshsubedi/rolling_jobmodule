@@ -1,0 +1,1 @@
+<a href="<?php echo e($data); ?>" >Click here to continue</a>

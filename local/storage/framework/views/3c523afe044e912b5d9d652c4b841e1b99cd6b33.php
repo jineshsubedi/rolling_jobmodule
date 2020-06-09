@@ -17,6 +17,7 @@ New Job Level
                     <form class="form-horizontal" role="form" id="testform" method="POST" action="<?php echo e(route('branchadmin.dropbox.store')); ?>" enctype="multipart/form-data">
                         <?php echo csrf_field(); ?>
 
+                        <input type="hidden" name="folder_id" value="<?php echo e($folder_id); ?>">
                         <div class="row">
                          <div class="col-md-10">
                             <div class="form-group<?php echo e($errors->has('document') ? ' has-error' : ''); ?>">

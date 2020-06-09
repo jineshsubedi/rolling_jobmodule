@@ -34,5 +34,9 @@ return [
         'key'    => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],
-
+    'dropbox' => [
+        'api'    => env('DROPBOX_API'),
+        'key'    => env('DROPBOX_KEY'),
+        'secret' => env('DROPBOX_SECRET'),
+    ],
 ];

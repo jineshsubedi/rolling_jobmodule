@@ -14,23 +14,24 @@ New Job Level
             <div class="panel panel-default">
                 <div class="panel-heading">Upload to dropbox</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" id="testform" method="POST" action="<?php echo e(route('branchadmin.dropbox.store')); ?>" enctype="multipart/form-data">
+                    <form class="form-horizontal" role="form" id="testform" method="POST" action="<?php echo e(route('branchadmin.dropbox.storefolder')); ?>" enctype="multipart/form-data">
                         <?php echo csrf_field(); ?>
 
+                        <input type="hidden" name="folder_id" value="<?php echo e($folder_id); ?>">
                         <div class="row">
-                         <div class="col-md-10">
-                            <div class="form-group<?php echo e($errors->has('document') ? ' has-error' : ''); ?>">
-                                <label class="col-md-2 control-label required">Document</label>
-                                <div class="col-md-10">
-                                    <input type="file" class="form-control" name="document" value="<?php echo e(old('name')); ?>">
-                                    <?php if($errors->has('document')): ?>
-                                        <span class="help-block">
-                                            <strong><?php echo e($errors->first('document')); ?></strong>
+                            <div class="col-md-10">
+                                <div class="form-group<?php echo e($errors->has('folder_name') ? ' has-error' : ''); ?>">
+                                    <label class="col-md-2 control-label required">Folder Name</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control" name="folder_name" value="<?php echo e(old('folder_name')); ?>">
+                                        <?php if($errors->has('folder_name')): ?>
+                                            <span class="help-block">
+                                            <strong><?php echo e($errors->first('folder_name')); ?></strong>
                                         </span>
-                                    <?php endif; ?>
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-10 col-md-offset-4">

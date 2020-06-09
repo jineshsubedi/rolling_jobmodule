@@ -42,6 +42,13 @@ class GoogleDriveController extends Controller
     }
     public function index(Request $request){
         $id=\Config::get('filesystems.disks.google.folderId');
+//        $fileMetadata = new \Google_Service_Drive_DriveFile(array(
+//            'name' => 'RollingPHP',
+//            'parents' => array($id),
+//            'mimeType' => 'application/vnd.google-apps.folder'));
+//        $folder = $this->drive->files->create($fileMetadata, array(
+//            'fields' => 'id'));
+//        dd($folder->id);
         $optParams = [
             'fields' => 'files(contentHints/thumbnail,fileExtension,iconLink,id,name,size,thumbnailLink,webContentLink,webViewLink,mimeType)',
             'q' => "'".$id."' in parents  and trashed=false"
@@ -143,56 +150,5 @@ class GoogleDriveController extends Controller
             return false;
         }
 
-    }
-    public function update($id, Request $request)
-    {
-        $v= Validator::make($request->all(),
-        [
-            'title' => 'required|min:3',
-        ]);
-        if($v->fails())
-        {
-            return redirect()->back()->withErrors($v);
-        } else {
-            @session_start();
-            if (isset($_SESSION['access_token']) && $_SESSION['access_token']) {
-                $this->client->setAccessToken($_SESSION['access_token']);
-                $service = new Google_Service_Calendar($this->client);
-
-                $startDateTime=$request->start_date.'T'.$request->start_time.':00Z';
-                $endDateTime=$request->end_date.'T'.$request->end_time.':00Z';
-
-                // retrieve the event from the API.
-                $event = $service->events->get('primary', $id);
-
-                $event->setSummary($request->title);
-
-                $event->setDescription($request->description);
-
-                //start time
-                $start = new Google_Service_Calendar_EventDateTime();
-                $start->setDateTime($startDateTime);
-                $event->setStart($start);
-
-                //end time
-                $end = new Google_Service_Calendar_EventDateTime();
-                $end->setDateTime($endDateTime);
-                $event->setEnd($end);
-
-                $updatedEvent = $service->events->update('primary', $event->getId(), $event);
-
-                if ($updatedEvent) {
-                    \Session::flash('alert-success', 'Record have been saved Successfully');
-                    return redirect()->route('branchadmin.drive.index');
-
-                } else {
-                    \Session::flash('alert-danger', 'Something Went Wrong on Saving Data');
-                    return redirect()->route('branchadmin.drive.index');
-                }
-
-            } else {
-                return redirect()->route('oauth2callback');
-            }
-        }
     }
 }

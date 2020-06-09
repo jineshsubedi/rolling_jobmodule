@@ -13,11 +13,10 @@ Job Level
  <div class="row">
     <div class="col-xs-12">
       <div class="row">
-          <a href="<?php echo e(route('branchadmin.dropbox.create')); ?>" class="btn btn-primary right"><i class="fa fa-fw fa-plus"></i>Add New Document to dropbox</a>
-          <a href="<?php echo e(route('branchadmin.dropbox.createfolder')); ?>" class="btn btn-primary right"><i class="fa fa-file"></i> Add New folder to dropbox</a>
-
+          <a href="<?php echo e(route('branchadmin.dropbox.uploadinfolder', $data['metadata']['id'])); ?>" class="btn btn-primary right"><i class="fa fa-fw fa-plus"></i>Add New Document inside Folder</a>
+          <a href="<?php echo e(route('branchadmin.dropbox.newfolder', $data['metadata']['id'])); ?>" class="btn btn-primary right"><i class="fa fa-file"></i> Add New folder to dropbox</a>
+          <a href="<?php echo e(route('branchadmin.dropbox.index')); ?>" class="btn btn-primary"><i class="fa fa-list"></i>Back to index</a>
       </div>
-     
       <div class="box">
             <div class="box-body">
                 <table class="table table-bordered table-hover">
@@ -30,13 +29,12 @@ Job Level
                     </thead>
                     <tbody>
                       <?php $i=1;
-                        foreach ($data as $row) { ?>
-
+                        foreach ($data['results'] as $row) { ?>
                           <tr>
                         <td><?php echo $i++ ;?></td>
                               <td>
                                   <?php if($row['.tag'] == 'folder'): ?>
-                                      <a href='<?php echo e(route('branchadmin.dropbox.openfolder', $row['id'])); ?>'><i class="fa fa-folder"></i> <?php echo e($row['name']); ?></a><br>
+                                      <a href="<?php echo e(route('branchadmin.dropbox.openfolder', $row['id'])); ?>"><i class="fa fa-folder"></i> <?php echo e($row['name']); ?></a><br>
                                   <?php else: ?>
                                       <?php echo e($row['name']); ?>
 
@@ -70,14 +68,16 @@ Job Level
   <div class="row">
     <div class="col-xs-12">
       <div class="dataTables_paginate paging_simple_numbers">
+
+<!--          --><?php //echo $data->render();?>
       </div>
     </div>
   </div>
-
+  
   <script type="text/javascript">
     function confirm_delete(ids){
     if(confirm('Do You Want To Delete This joblevel?')){
-      var url = "<?php echo e(url('/branchadmin/dropbox/"+ids+"/delete')); ?>";
+      var url = "<?php echo e(url('/branchadmin/job_level/"+ids+"/delete')); ?>";
       location = url;
       }
     }

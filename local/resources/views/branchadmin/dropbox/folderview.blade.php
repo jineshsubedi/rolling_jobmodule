@@ -14,10 +14,10 @@ Job Level
  <div class="row">
     <div class="col-xs-12">
       <div class="row">
-          <a href="{{ route('branchadmin.drive.create') }}" class="btn btn-primary right"><i class="fa fa-fw fa-plus"></i>Add New Document to File</a>
-          <a href="{{ route('branchadmin.drive.index') }}" class="btn btn-primary right"><i class="fa fa-list"></i>Back to index</a>
+          <a href="{{ route('branchadmin.dropbox.uploadinfolder', $data['metadata']['id']) }}" class="btn btn-primary right"><i class="fa fa-fw fa-plus"></i>Add New Document inside Folder</a>
+          <a href="{{ route('branchadmin.dropbox.newfolder', $data['metadata']['id']) }}" class="btn btn-primary right"><i class="fa fa-file"></i> Add New folder to dropbox</a>
+          <a href="{{ route('branchadmin.dropbox.index') }}" class="btn btn-primary"><i class="fa fa-list"></i>Back to index</a>
       </div>
-     
       <div class="box">
             <div class="box-body">
                 <table class="table table-bordered table-hover">
@@ -30,18 +30,25 @@ Job Level
                     </thead>
                     <tbody>
                       <?php $i=1;
-                        foreach ($data as $row) { ?>
+                        foreach ($data['results'] as $row) { ?>
                           <tr>
                         <td><?php echo $i++ ;?></td>
                               <td>
-                                  <img src="{{$row->iconLink}}" alt="{{$row->iconLink}}">
-                                  <a href="{{$row->webViewLink}}">{{$row->name}}</a>
+                                  @if ($row['.tag'] == 'folder')
+                                      <a href="{{route('branchadmin.dropbox.openfolder', $row['id'])}}"><i class="fa fa-folder"></i> {{ $row['name'] }}</a><br>
+                                  @else
+                                      {{ $row['name'] }}
+                                  @endif
                               </td>
                         <td>
-                          <form action="{{route('branchadmin.drive.delete', $row->id)}}" method="post">
+                          <form action="{{route('branchadmin.dropbox.destroy', $row['id'])}}" method="post">
                               {!! csrf_field() !!}
                               {!! method_field('DELETE') !!}
-                              <a href="{{ url('/branchadmin/drive/'.$row->id.'/restore/') }}"  onclick="return confirm('Are you sure you want to restore?');" class="btn btn-primary left"><i class="fa fa-recycle"></i></a>
+                              @if ($row['.tag'] == 'folder')
+                                  <a href="{{route('branchadmin.dropbox.openfolder', $row['id'])}}" class="btn btn-primary left"><i class="fa fa-eye"></i></a>
+                              @else
+                                  <a href="{{route('branchadmin.dropbox.show', $row['id'])}}" target="_blank" class="btn btn-primary left"><i class="fa fa-eye"></i></a>
+                              @endif
                               <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?');"><i class="fa fa-fw fa-remove"></i></button>
                           </form>
                         </td>

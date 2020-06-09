@@ -15,22 +15,23 @@ New Job Level
             <div class="panel panel-default">
                 <div class="panel-heading">Upload to dropbox</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" id="testform" method="POST" action="{{ route('branchadmin.dropbox.store') }}" enctype="multipart/form-data">
+                    <form class="form-horizontal" role="form" id="testform" method="POST" action="{{ route('branchadmin.dropbox.storefolder') }}" enctype="multipart/form-data">
                         {!! csrf_field() !!}
+                        <input type="hidden" name="folder_id" value="{{$folder_id}}">
                         <div class="row">
-                         <div class="col-md-10">
-                            <div class="form-group{{ $errors->has('document') ? ' has-error' : '' }}">
-                                <label class="col-md-2 control-label required">Document</label>
-                                <div class="col-md-10">
-                                    <input type="file" class="form-control" name="document" value="{{ old('name') }}">
-                                    @if ($errors->has('document'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('document') }}</strong>
+                            <div class="col-md-10">
+                                <div class="form-group{{ $errors->has('folder_name') ? ' has-error' : '' }}">
+                                    <label class="col-md-2 control-label required">Folder Name</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control" name="folder_name" value="{{ old('folder_name') }}">
+                                        @if ($errors->has('folder_name'))
+                                            <span class="help-block">
+                                            <strong>{{ $errors->first('folder_name') }}</strong>
                                         </span>
-                                    @endif
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-10 col-md-offset-4">
