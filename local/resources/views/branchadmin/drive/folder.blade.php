@@ -9,12 +9,11 @@ Job Level
             <li class="active">Job Calendar</li>
 @stop
 @section('content')
-{{--    {{dd($datas['result'][0]['description'])}}--}}
-{{--        {{dd($datas['result'][8])}}--}}
  <div class="row">
     <div class="col-xs-12">
       <div class="row">
-          <a href="{{ route('branchadmin.drive.create') }}" class="btn btn-primary right"><i class="fa fa-fw fa-plus"></i>Add New Document to Drive</a>
+          <a href="{{ route('branchadmin.drive.index') }}" class="btn btn-primary"><i class="fa fa-list"></i>Back to index</a>
+          <a href="{{ route('branchadmin.drive.folderupload',$folder_id) }}" class="btn btn-primary right"><i class="fa fa-fw fa-plus"></i>Add New Document to Drive</a>
           <a href="{{ route('branchadmin.drive.createfolder',$folder_id) }}" class="btn btn-primary right"><i class="fa fa-file"></i>  Add New Folder to Drive</a>
           <a href="{{ route('branchadmin.drive.trash') }}" class="btn btn-danger right"><i class="fa fa-trash"></i>Trash</a>
       </div>

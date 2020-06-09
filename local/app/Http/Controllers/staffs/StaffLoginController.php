@@ -1,10 +1,12 @@
 <?php
 namespace App\Http\Controllers\staffs;
+use App\GoogledriveAPI;
 use App\Staffs;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Mail;
+use Validator;
 use App\Imagetool;
 use App\library\myFunctions;
 use App\library\Settings;
@@ -25,7 +27,38 @@ class StaffLoginController extends Controller
         if (auth()->guard('staffs')->user()) return redirect()->route('staffs.dashboard');
         return view('staffs.login');
     }
-   
+    public function getDriveApi()
+    {
+        if(GoogledriveAPI::where('staff_id','=',auth()->guard('staffs')->user()->id)->first())return redirect()->route('branchadmin.drive.index');
+        return view('branchadmin.drive.getapi');
+    }
+    public function storeDriveApi(Request  $request)
+    {
+        $v= Validator::make($request->all(),
+            [
+                'client_id' => 'required',
+                'client_secret' => 'required',
+                'refresh_token' => 'required',
+                'drive_folder_id' => 'required',
+
+            ]);
+        if($v->fails())
+        {
+            return redirect()->back()->withErrors($v)
+                ->withInput();
+        } else {
+            $data=GoogledriveAPI::create($request->all());
+            if ($data == true) {
+                \Session::flash('alert-success','Google Drive API added');
+                return redirect()->route('branchadmin.drive.index');
+            } else {
+                \Session::flash('alert-danger','Fail to add Google Drive API');
+                return redirect()->route('googledrive.api');
+            }
+
+        }
+    }
+
 
 
 

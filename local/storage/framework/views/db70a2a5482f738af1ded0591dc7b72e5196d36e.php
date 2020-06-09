@@ -8,12 +8,11 @@ Job Level
             <li class="active">Job Calendar</li>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
-
-
  <div class="row">
     <div class="col-xs-12">
       <div class="row">
-          <a href="<?php echo e(route('branchadmin.drive.create')); ?>" class="btn btn-primary right"><i class="fa fa-fw fa-plus"></i>Add New Document to Drive</a>
+          <a href="<?php echo e(route('branchadmin.drive.index')); ?>" class="btn btn-primary"><i class="fa fa-list"></i>Back to index</a>
+          <a href="<?php echo e(route('branchadmin.drive.folderupload',$folder_id)); ?>" class="btn btn-primary right"><i class="fa fa-fw fa-plus"></i>Add New Document to Drive</a>
           <a href="<?php echo e(route('branchadmin.drive.createfolder',$folder_id)); ?>" class="btn btn-primary right"><i class="fa fa-file"></i>  Add New Folder to Drive</a>
           <a href="<?php echo e(route('branchadmin.drive.trash')); ?>" class="btn btn-danger right"><i class="fa fa-trash"></i>Trash</a>
       </div>

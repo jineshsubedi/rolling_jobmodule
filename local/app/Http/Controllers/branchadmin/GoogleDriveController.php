@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\branchadmin;
 
+use App\GoogledriveAPI;
 use App\Http\Controllers\Controller;
 use Google_Client;
 use Google_Service_Calendar;
@@ -30,38 +31,53 @@ class GoogleDriveController extends Controller
      * @return void
      */
     private $drive;
+    private $api;
     public function __construct(Google_Client $client)
     {
+
         $this->middleware(function ($request, $next) use ($client) {
-            $client->setAuthConfig('drivecredential.json');
-            $client->refreshToken(\Config::get('filesystems.disks.google.refreshToken'));
+            $this->api = GoogledriveAPI::where('staff_id','=',auth()->guard('staffs')->user()->id)->first();
+            if($this->api == null){
+                return redirect()->route('googledrive.api');
+            }
+            $client->setClientId($this->api->client_id);
+            $client->setClientSecret($this->api->client_id);
+            $client->refreshToken($this->api->refresh_token);
+//            $client->setAuthConfig('drivecredential.json');
+//            $client->refreshToken(\Config::get('filesystems.disks.google.refreshToken'));
             $client->addScope(Google_Service_Drive::DRIVE);
             $this->drive = new \Google_Service_Drive($client);
             return $next($request);
         });
     }
     public function index(Request $request){
-        $id=\Config::get('filesystems.disks.google.folderId');
-//        $fileMetadata = new \Google_Service_Drive_DriveFile(array(
-//            'name' => 'RollingPHP',
-//            'parents' => array($id),
-//            'mimeType' => 'application/vnd.google-apps.folder'));
-//        $folder = $this->drive->files->create($fileMetadata, array(
-//            'fields' => 'id'));
-//        dd($folder->id);
+
+        $id=$this->api->drive_folder_id;
+
         $optParams = [
             'fields' => 'files(contentHints/thumbnail,fileExtension,iconLink,id,name,size,thumbnailLink,webContentLink,webViewLink,mimeType)',
             'q' => "'".$id."' in parents  and trashed=false"
         ];
         $results = $this->drive->files->listFiles($optParams);
+//        dd($results->getFiles());
         if (count($results->getFiles()) == 0) {
             print "No files found.\n";
         } else {
-            return view('branchadmin.drive.index')->with('data',$results->getFiles());
+            return view('branchadmin.drive.index')->with('data',$results->getFiles())->with('folder_id',$id);
         }
     }
+    public function viewfolder(Request $request,$id){
+
+        $optParams = [
+            'fields' => 'files(contentHints/thumbnail,fileExtension,iconLink,id,name,size,thumbnailLink,webContentLink,webViewLink,mimeType)',
+            'q' => "'".$id."' in parents  and trashed=false"
+        ];
+        $results = $this->drive->files->listFiles($optParams);
+//        dd($results);
+        return view('branchadmin.drive.folder')->with('data',$results->getFiles())->with('folder_id',$id);
+    }
     public function trash(Request $request){
-        $id=\Config::get('filesystems.disks.google.folderId');
+        $id=$this->api->drive_folder_id;
         $optParams = [
             'fields' => 'files(contentHints/thumbnail,fileExtension,iconLink,id,name,size,thumbnailLink,webContentLink,webViewLink,mimeType)',
             'q' => "'".$id."' in parents  and trashed=true"
@@ -78,6 +94,14 @@ class GoogleDriveController extends Controller
     {
         return view('branchadmin.drive.newform');
     }
+     public function folderupload($folder)
+    {
+        return view('branchadmin.drive.folderupload')->with('folder_id',$folder);
+    }
+    public function createfolder()
+    {
+        return view('branchadmin.drive.newfolder');
+    }
     public function store(Request $request)
     {
         $v= Validator::make($request->all(),
@@ -90,9 +114,63 @@ class GoogleDriveController extends Controller
             return redirect()->back()->withErrors($v)
                         ->withInput();
         } else {
-            $data=$request->file("document")->store("1uSA386lPj6eHGH_fzj0iuphouozGi66p","google");
+            $data=$request->file("document")->store($this->api->drive_folder_id,"google");
             if ($data == true) {
                 \Session::flash('alert-success','Data successfully inserted in drive');
+                return redirect()->route('branchadmin.drive.index');
+            } else {
+                \Session::flash('alert-danger','Drive accessed failed ');
+                return redirect()->route('branchadmin.drive.index');
+            }
+
+//            dd($request->file("document"));
+//            dd();
+        }
+    }
+    public function storeinfolder(Request $request)
+    {
+        $v= Validator::make($request->all(),
+            [
+                    'document' => 'required',
+
+            ]);
+        if($v->fails())
+        {
+            return redirect()->back()->withErrors($v)
+                        ->withInput();
+        } else {
+            $data=$request->file("document")->store($request->folder_id,"google");
+            if ($data == true) {
+                \Session::flash('alert-success','Data successfully inserted in drive');
+                return redirect()->route('branchadmin.drive.viewfolder', $request->folder_id);
+            } else {
+                \Session::flash('alert-danger','Drive accessed failed ');
+                return redirect()->route('branchadmin.drive.index');
+            }
+
+//            dd($request->file("document"));
+//            dd();
+        }
+    }
+    public function storefolder(Request $request)
+    {
+        $v= Validator::make($request->all(),
+            [
+                    'folder_name' => 'required',
+
+            ]);
+        if($v->fails())
+        {
+            return redirect()->back()->withErrors($v)
+                        ->withInput();
+        } else {
+            $fileMetadata = new \Google_Service_Drive_DriveFile(array(
+                'name' => $request->folder_name,
+                'parents' => array($request->parent_folder),
+                'mimeType' => 'application/vnd.google-apps.folder'));
+            $data = $this->drive->files->create($fileMetadata, array('fields' => 'id'));
+            if ($data == true) {
+                \Session::flash('alert-success','Folder successfully created in drive');
                 return redirect()->route('branchadmin.drive.index');
             } else {
                 \Session::flash('alert-danger','Drive accessed failed ');

@@ -59,10 +59,17 @@ Route::group(['prefix' => 'branchadmin', 'middleware' => ['web']], function () {
         //jobs
         Route::resource('job_level','branchadmin\JobLevelController');
         Route::resource('calendar','branchadmin\CalendarController');
-        Route::resource('drive','branchadmin\GoogleDriveController');
-        Route::get('trash', 'branchadmin\GoogleDriveController@trash')->name('drive.trash');
+
+        Route::get('drive/trash', 'branchadmin\GoogleDriveController@trash')->name('drive.trash');
+        Route::get('drive/folder/upload/{folder}', 'branchadmin\GoogleDriveController@folderupload')->name('drive.folderupload');
+        Route::post('drive/folder/store', 'branchadmin\GoogleDriveController@storeinfolder')->name('drive.storeinfolder');
+        Route::get('drive/folder/{id}', 'branchadmin\GoogleDriveController@viewfolder')->name('drive.viewfolder');
+        Route::get('drive/create/folder/{id}', 'branchadmin\GoogleDriveController@createfolder')->name('drive.createfolder');
+        Route::post('drive/store/folder', 'branchadmin\GoogleDriveController@storefolder')->name('drive.storefolder');
         Route::get('drive/{id}/restore', 'branchadmin\GoogleDriveController@restore');
         Route::delete('drive/{id}/delete', 'branchadmin\GoogleDriveController@delete')->name('drive.delete');
+        Route::resource('drive','branchadmin\GoogleDriveController');
+
         Route::get('gmail/trash', 'branchadmin\GmailController@trash')->name('gmail.trash');
         Route::get('gmail/{id}/restore', 'branchadmin\GmailController@restore');
         Route::delete('gmail/{id}/delete', 'branchadmin\GmailController@delete')->name('gmail.delete');
@@ -202,6 +209,9 @@ Route::group(['prefix' => 'staffs', 'middleware' => ['web']], function () {
 
 
 Route::group(['middleware' => 'web'], function () {
+    Route::get('staffs/googledrive/api', 'staffs\StaffLoginController@getDriveApi')->name('googledrive.api');
+    Route::post('staffs/googledrive/api', 'staffs\StaffLoginController@storeDriveApi')->name('googledrive.api.store');
+
     Route::auth();
     Route::get('staffs/login', 'staffs\StaffLoginController@getLogin');
     Route::post('staffs/login', 'staffs\StaffLoginController@staffAuth');
