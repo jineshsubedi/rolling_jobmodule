@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers\staffs;
+use App\DropboxAPI;
 use App\GoogledriveAPI;
 use App\Staffs;
 use App\Http\Controllers\Controller;
@@ -54,6 +55,35 @@ class StaffLoginController extends Controller
             } else {
                 \Session::flash('alert-danger','Fail to add Google Drive API');
                 return redirect()->route('googledrive.api');
+            }
+
+        }
+    }
+
+    public function getDropboxApi()
+    {
+        if(DropboxAPI::where('staff_id','=',auth()->guard('staffs')->user()->id)->first())return redirect()->route('branchadmin.dropbox.index');
+        return view('branchadmin.dropbox.getapi');
+    }
+    public function storeDropboxApi(Request  $request)
+    {
+        $v= Validator::make($request->all(),
+            [
+                'access_token' => 'required',
+
+            ]);
+        if($v->fails())
+        {
+            return redirect()->back()->withErrors($v)
+                ->withInput();
+        } else {
+            $data=DropboxAPI::create($request->all());
+            if ($data == true) {
+                \Session::flash('alert-success','Dropbox API added successfully');
+                return redirect()->route('branchadmin.dropbox.index');
+            } else {
+                \Session::flash('alert-danger','Fail to add Dropbox API');
+                return redirect()->route('dropbox.api');
             }
 
         }

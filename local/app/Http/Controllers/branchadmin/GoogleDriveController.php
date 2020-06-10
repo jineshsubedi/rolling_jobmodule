@@ -41,9 +41,12 @@ class GoogleDriveController extends Controller
                 return redirect()->route('googledrive.api');
             }
             $client->setClientId($this->api->client_id);
-            $client->setClientSecret($this->api->client_id);
+            $client->setClientSecret($this->api->client_secret);
             $client->refreshToken($this->api->refresh_token);
+
 //            $client->setAuthConfig('drivecredential.json');
+//            $client->setClientId(\Config::get('filesystems.disks.google.clientId'));
+//            $client->setClientSecret(\Config::get('filesystems.disks.google.clientSecret'));
 //            $client->refreshToken(\Config::get('filesystems.disks.google.refreshToken'));
             $client->addScope(Google_Service_Drive::DRIVE);
             $this->drive = new \Google_Service_Drive($client);
@@ -52,6 +55,7 @@ class GoogleDriveController extends Controller
     }
     public function index(Request $request){
 
+//        $id=\Config::get('filesystems.disks.google.folderId');
         $id=$this->api->drive_folder_id;
 
         $optParams = [

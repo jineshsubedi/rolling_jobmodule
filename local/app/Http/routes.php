@@ -36,19 +36,19 @@ Route::group(['prefix' => 'supervisor', 'middleware' => ['web']], function () {
 // gmail testing
 Route::get('gmail', 'branchadmin\GmailController@index')->name('gmail');
 
-Route::get('/oauth/gmail', function (){
-    return \Dacastro4\LaravelGmail\Facade\LaravelGmail::redirect();
-});
-
-Route::get('/oauth/gmail/callback', function (){
-    \Dacastro4\LaravelGmail\Facade\LaravelGmail::makeToken();
-    return redirect()->route('branchadmin.gmail.index');
-});
-
-Route::get('/oauth/gmail/logout', function (){
-    \Dacastro4\LaravelGmail\Facade\LaravelGmail::logout(); //It returns exception if fails
-    return redirect()->to('/branchadmin/jobs');
-});
+//Route::get('/oauth/gmail', function (){
+//    return \Dacastro4\LaravelGmail\Facade\LaravelGmail::redirect();
+//});
+//
+//Route::get('/oauth/gmail/callback', function (){
+//    \Dacastro4\LaravelGmail\Facade\LaravelGmail::makeToken();
+//    return redirect()->route('branchadmin.gmail.index');
+//});
+//
+//Route::get('/oauth/gmail/logout', function (){
+//    \Dacastro4\LaravelGmail\Facade\LaravelGmail::logout(); //It returns exception if fails
+//    return redirect()->to('/branchadmin/jobs');
+//});
 
 Route::group(['prefix' => 'branchadmin', 'middleware' => ['web']], function () {
 
@@ -211,6 +211,8 @@ Route::group(['prefix' => 'staffs', 'middleware' => ['web']], function () {
 Route::group(['middleware' => 'web'], function () {
     Route::get('staffs/googledrive/api', 'staffs\StaffLoginController@getDriveApi')->name('googledrive.api');
     Route::post('staffs/googledrive/api', 'staffs\StaffLoginController@storeDriveApi')->name('googledrive.api.store');
+    Route::get('staffs/dropbox/api', 'staffs\StaffLoginController@getDropboxApi')->name('dropbox.api');
+    Route::post('staffs/dropbox/api', 'staffs\StaffLoginController@storeDropboxApi')->name('dropbox.api.store');
 
     Route::auth();
     Route::get('staffs/login', 'staffs\StaffLoginController@getLogin');

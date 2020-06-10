@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\branchadmin;
 
+use App\DropboxAPI;
 use App\Http\Controllers\Controller;
 use Google_Client;
 use Google_Service_Calendar;
@@ -31,9 +32,19 @@ class DropboxController extends Controller
      * @return void
      */
     private $client;
-    public function __construct()
+    private $api;
+    public function __construct(Client $client)
     {
-        $this->client = new Client(\Config::get('services.dropbox.api'));
+        $this->middleware(function ($request, $next) use ($client) {
+            $this->api = DropboxAPI::where('staff_id','=',auth()->guard('staffs')->user()->id)->first();
+            if($this->api == null){
+                return redirect()->route('dropbox.api');
+            }else{
+                $this->client = new Client($this->api->access_token);
+            }
+            return $next($request);
+        });
+
     }
     public function index(Request $request){
         $results = $this->client->listFolder();
