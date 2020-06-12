@@ -8,8 +8,8 @@ Job Level
             <li class="active">Job Calendar</li>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
-<?php /*    <?php echo e(dd($datas['result'][0]['description'])); ?>*/ ?>
-<?php /*        <?php echo e(dd($datas['result'][8])); ?>*/ ?>
+
+
  <div class="row">
     <div class="col-xs-12">
       <div class="row">
@@ -40,11 +40,11 @@ Job Level
                               <td><?php echo $row['summary'];?></td>
                               <td><?php echo $row['description'];?></td>
                               <td>
-                                  <?php foreach($row['modelData']['attendees'] as $attendees): ?>
+                                  <?php $__currentLoopData = $row['modelData']['attendees']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $attendees): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
                                       <ul>
                                           <li><?php echo $attendees['email'];?></li>
                                       </ul>
-                                      <?php endforeach; ?>
+                                      <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
                               </td>
                               <td><?php echo $row['modelData']['start']['dateTime'];?></td>
                               <td><?php echo $row['modelData']['end']['dateTime'];?></td>
@@ -73,7 +73,7 @@ Job Level
   <div class="row">
     <div class="col-xs-12">
       <div class="dataTables_paginate paging_simple_numbers">
-<?php /*          <iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=Asia%2FKathmandu&amp;src=ZGVlcGFhY2VlQGdtYWlsLmNvbQ&amp;src=ZW4tZ2IubnAjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;color=%237986CB&amp;color=%230B8043&amp;showTitle=1&amp;showNav=1&amp;showPrint=0&amp;showCalendars=1&amp;showTz=1&amp;hl=en&amp;title=Rolling%20Calendar" style="border:solid 1px #777" width="100%" height="600" frameborder="0" scrolling="no"></iframe>*/ ?>
+
 <!--          --><?php //echo $data->render();?>
       </div>
     </div>

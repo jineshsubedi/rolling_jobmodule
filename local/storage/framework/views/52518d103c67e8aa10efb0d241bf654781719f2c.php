@@ -47,7 +47,7 @@ Job Level
 
                             <?php ($from = $message->getFrom()); ?>
                             <?php if($message->getLabels()[0] == "UNREAD"): ?>
-                                <td><?php echo $i++ ;?> (unread) <?php echo e($data['inbox']->pageToken); ?></td>
+                                <td><?php echo $i++ ;?> (unread)</td>
                                 <th><?php echo $from['name'];?> (<?php echo e($from['email']); ?>)</th>
                                 <th><?php echo e($message->getSubject()); ?></th>
                             <?php else: ?>

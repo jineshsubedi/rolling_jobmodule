@@ -33,6 +33,11 @@ return [
 	'client_secret' => env('GMAIL_CLIENT_SECRET'),
 	'redirect_url' => env('GMAIL_REDIRECT_URI', '/'),
 
+//    'project_id' => '',
+//	'client_id' => '',
+//	'client_secret' => '',
+//	'redirect_url' => ,
+
 	'state' => null,
 
 	'scopes' => [

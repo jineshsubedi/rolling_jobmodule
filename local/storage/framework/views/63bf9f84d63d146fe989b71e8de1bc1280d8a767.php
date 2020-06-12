@@ -9,7 +9,7 @@
 <body style=" padding:0px;  margin:0px;  font-family: 'Poppins', sans-serif;  background:url(<?php echo e(asset('image/headerbg.png')); ?>) repeat-x;  padding-bottom: 30px;">
   <div style="width: 95%; margin:0 auto; position: relative;">
     <div style="width: 16%;  padding:5px;  background-color: #eeeeee;  border:1px solid #fff;  float: left;  border-radius: 3px;  margin-top:60px;">
-<?php /*      <img style="width: 100%" src="<?php echo e($data['logo']); ?>">*/ ?>
+
     </div>
     <div style="width: 77%;  background-color: #f9f9f9;  border:1px solid #fff;  border-radius: 3px 3px 0px 0px;  float: right;  padding:18px;  border-bottom: 5px solid #48d617;  box-shadow: 0 10px 6px rgba(119, 119, 199, 0.3);  margin-top:40px;">
       <div style=" width:100%;  float: left;  color: #555555;  font-size: 13px;">

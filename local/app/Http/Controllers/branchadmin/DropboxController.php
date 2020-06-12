@@ -38,7 +38,7 @@ class DropboxController extends Controller
         $this->middleware(function ($request, $next) use ($client) {
             $this->api = DropboxAPI::where('staff_id','=',auth()->guard('staffs')->user()->id)->first();
             if($this->api == null){
-                return redirect()->route('dropbox.api');
+                return redirect()->route('dropbox.api.create');
             }else{
                 $this->client = new Client($this->api->access_token);
             }

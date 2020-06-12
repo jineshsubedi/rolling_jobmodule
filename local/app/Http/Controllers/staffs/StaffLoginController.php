@@ -28,69 +28,6 @@ class StaffLoginController extends Controller
         if (auth()->guard('staffs')->user()) return redirect()->route('staffs.dashboard');
         return view('staffs.login');
     }
-    public function getDriveApi()
-    {
-        if(GoogledriveAPI::where('staff_id','=',auth()->guard('staffs')->user()->id)->first())return redirect()->route('branchadmin.drive.index');
-        return view('branchadmin.drive.getapi');
-    }
-    public function storeDriveApi(Request  $request)
-    {
-        $v= Validator::make($request->all(),
-            [
-                'client_id' => 'required',
-                'client_secret' => 'required',
-                'refresh_token' => 'required',
-                'drive_folder_id' => 'required',
-
-            ]);
-        if($v->fails())
-        {
-            return redirect()->back()->withErrors($v)
-                ->withInput();
-        } else {
-            $data=GoogledriveAPI::create($request->all());
-            if ($data == true) {
-                \Session::flash('alert-success','Google Drive API added');
-                return redirect()->route('branchadmin.drive.index');
-            } else {
-                \Session::flash('alert-danger','Fail to add Google Drive API');
-                return redirect()->route('googledrive.api');
-            }
-
-        }
-    }
-
-    public function getDropboxApi()
-    {
-        if(DropboxAPI::where('staff_id','=',auth()->guard('staffs')->user()->id)->first())return redirect()->route('branchadmin.dropbox.index');
-        return view('branchadmin.dropbox.getapi');
-    }
-    public function storeDropboxApi(Request  $request)
-    {
-        $v= Validator::make($request->all(),
-            [
-                'access_token' => 'required',
-
-            ]);
-        if($v->fails())
-        {
-            return redirect()->back()->withErrors($v)
-                ->withInput();
-        } else {
-            $data=DropboxAPI::create($request->all());
-            if ($data == true) {
-                \Session::flash('alert-success','Dropbox API added successfully');
-                return redirect()->route('branchadmin.dropbox.index');
-            } else {
-                \Session::flash('alert-danger','Fail to add Dropbox API');
-                return redirect()->route('dropbox.api');
-            }
-
-        }
-    }
-
-
-
 
     public function staffAuth(Request $request)
     {

@@ -14,23 +14,23 @@ New Job Level
             <div class="panel panel-default">
                 <div class="panel-heading">Enter API details</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" id="testform" method="POST" action="{{ route('dropbox.api.store') }}" enctype="multipart/form-data">
+                    <form class="form-horizontal" role="form" id="testform" method="POST" action="{{ route('dropbox.api.update') }}" enctype="multipart/form-data">
                         {!! csrf_field() !!}
                         <input type="hidden" name="staff_id" value="{{auth()->guard('staffs')->user()->id}}">
                         <div class="row">
-                            {{dd($errors->has('document'))}}
-                            <div class="col-md-10">
-                                <div class="form-group{{ $errors->has('document') ? ' has-error' : '' }}">
-                                    <label class="col-md-2 control-label required">Document</label>
-                                    <div class="col-md-10">
-                                        <input type="file" class="form-control" name="document" value="{{ old('name') }}">
-                                        @if ($errors->has('document'))
-                                            <span class="help-block">
-                                            <strong>{{ $errors->first('document') }}</strong>
+                         <div class="col-md-10">
+                            <div class="form-group{{ $errors->has('access_token') ? ' has-error' : '' }}">
+                                <label class="col-md-2 control-label required">Access Token</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control" name="access_token" value="{{ $data->access_token }}">
+                                    @if ($errors->has('access_token'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('access_token') }}</strong>
                                         </span>
-                                        @endif
-                                    </div>
+                                    @endif
                                 </div>
+                            </div>
+                        </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-10 col-md-offset-4">

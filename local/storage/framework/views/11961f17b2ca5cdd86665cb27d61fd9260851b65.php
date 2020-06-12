@@ -30,18 +30,18 @@ Selected Application for Document Verification
                 <div class="row">
             <div class="col-xs-12">
             <div class="alert alert-danger">
-             <?php foreach($errors->all() as $error): ?>
+             <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
               <?php echo e('* : '.$error); ?></br>
-             <?php endforeach; ?>
+             <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
                 </div>
             </div>
 
           </div>
        <?php endif; ?>
-<?php /* <?php if(Auth::guard('employer')->user()->user_type === 1): ?> */ ?>
+
 <link rel="stylesheet" href="<?php echo e(asset('/assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')); ?>">
 <script src="<?php echo e(asset('assets/ckeditor/ckeditor.js')); ?>"></script>
-    <?php foreach($datas['meeting'] as $meeting ): ?>
+    <?php $__currentLoopData = $datas['meeting']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $meeting): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
         <div class="row bg bg-success">
             <div class="col-md-6 ">
                 <h5>Topic: <?php echo e($meeting->topic); ?></h5>
@@ -60,7 +60,7 @@ Selected Application for Document Verification
             </div>
         </div>
         <hr>
-    <?php endforeach; ?>
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
    <div class="row">
       <div class="col-md-12">
       <div class="box box-success collapsed-box">
@@ -89,13 +89,13 @@ Selected Application for Document Verification
                                 <label class="label-control required col-md-2 text-center">Job Status</label>
                                 <div class="col-md-10">
                                     <select class="form-control" name="status">
-                                        <?php foreach($datas['process_status'] as $status): ?>
+                                        <?php $__currentLoopData = $datas['process_status']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $status): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
                                         <?php if($datas['status'] == $status->id): ?>
                                         <option selected="selected" value="<?php echo e($status->id); ?>"><?php echo e($status->title); ?></option>
                                         <?php else: ?>
                                         <option value="<?php echo e($status->id); ?>"><?php echo e($status->title); ?></option>
                                         <?php endif; ?>
-                                        <?php endforeach; ?>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
                                     </select>
                                 </div>
                             </div>
@@ -433,7 +433,7 @@ Selected Application for Document Verification
   var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
     var pieChart       = new Chart(pieChartCanvas)
     var PieData        = [
-    <?php foreach($datas['age'] as $age): ?>
+    <?php $__currentLoopData = $datas['age']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $age): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
       {
         value    : '<?php echo e($age["total"]); ?>',
         color    : '<?php echo e($age["color"]); ?>',
@@ -441,7 +441,7 @@ Selected Application for Document Verification
         label    : '<?php echo e($age["title"]); ?>'
       },
       
-      <?php endforeach; ?>
+      <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
     ]
     <?php endif; ?>
     var pieOptions     = {
@@ -474,7 +474,7 @@ Selected Application for Document Verification
 
 	});
 </script>
-<?php /* <?php endif; ?> */ ?>
+
 
         <form class="form-horizontal" role="form" id="testform_verification" method="POST" action="<?php echo e(url('/branchadmin/jobs/update_verification')); ?>">
                 <?php echo csrf_field(); ?>

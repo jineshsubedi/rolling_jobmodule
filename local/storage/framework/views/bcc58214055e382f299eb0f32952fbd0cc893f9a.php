@@ -13,25 +13,24 @@ New Job Level
             <div class="panel panel-default">
                 <div class="panel-heading">Enter API details</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" id="testform" method="POST" action="<?php echo e(route('dropbox.api.store')); ?>" enctype="multipart/form-data">
+                    <form class="form-horizontal" role="form" id="testform" method="POST" action="<?php echo e(route('dropbox.api.update')); ?>" enctype="multipart/form-data">
                         <?php echo csrf_field(); ?>
 
                         <input type="hidden" name="staff_id" value="<?php echo e(auth()->guard('staffs')->user()->id); ?>">
                         <div class="row">
-                            <?php echo e(dd($errors->has('document'))); ?>
-
-                            <div class="col-md-10">
-                                <div class="form-group<?php echo e($errors->has('document') ? ' has-error' : ''); ?>">
-                                    <label class="col-md-2 control-label required">Document</label>
-                                    <div class="col-md-10">
-                                        <input type="file" class="form-control" name="document" value="<?php echo e(old('name')); ?>">
-                                        <?php if($errors->has('document')): ?>
-                                            <span class="help-block">
-                                            <strong><?php echo e($errors->first('document')); ?></strong>
+                         <div class="col-md-10">
+                            <div class="form-group<?php echo e($errors->has('access_token') ? ' has-error' : ''); ?>">
+                                <label class="col-md-2 control-label required">Access Token</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control" name="access_token" value="<?php echo e($data->access_token); ?>">
+                                    <?php if($errors->has('access_token')): ?>
+                                        <span class="help-block">
+                                            <strong><?php echo e($errors->first('access_token')); ?></strong>
                                         </span>
-                                        <?php endif; ?>
-                                    </div>
+                                    <?php endif; ?>
                                 </div>
+                            </div>
+                        </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-10 col-md-offset-4">

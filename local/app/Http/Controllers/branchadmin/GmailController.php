@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\branchadmin;
 
+use App\GmailAPI;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use Dacastro4\LaravelGmail\Facade\LaravelGmail;
 use Dacastro4\LaravelGmail\Services\Message\Mail;
 use Google_Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
+use League\Flysystem\Util\MimeType;
 use Validator;
 use App\JobLevel;
 
@@ -19,80 +22,54 @@ class GmailController extends Controller
      *
      * @return void
      */
-    function getClient()
-    {
-        $client = new Google_Client();
-        $client->setApplicationName('Gmail API PHP Quickstart');
-        $client->setScopes(\Google_Service_Gmail::GMAIL_READONLY);
-        $client->setClientId(\Config::get('gmail.client_id'));
-        $client->setClientSecret(\Config::get('gmail.client_secret'));
-        $client->setRedirectUri(\Config::get('gmail.redirect_url'));
-
-
-//        $client->setAuthConfig('credentials.json');
-        $client->setAccessType('offline');
-        $client->setPrompt('select_account consent');
-        // Load previously authorized token from a file, if it exists.
-        // The file token.json stores the user's access and refresh tokens, and is
-        // created automatically when the authorization flow completes for the first
-        // time.
-        $tokenPath = 'token.json';
-        if (file_exists($tokenPath)) {
-            $accessToken = json_decode(file_get_contents($tokenPath), true);
-            $client->setAccessToken($accessToken);
-        }
-        // If there is no previous token or it's expired.
-        if ($client->isAccessTokenExpired()) {
-
-            // Refresh the token if possible, else fetch a new one.
-            if ($client->getRefreshToken()) {
-                $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
-            } else {
-//                dd($client->createAuthUrl());
-//
-//                dd('s');
-                // Request authorization from the user.
-                $authUrl = $client->createAuthUrl();
-//                dd($authUrl);
-//                dd($authUrl);
-//                printf("Open the following link in your browser:\n%s\n", $authUrl);
-//                print 'Enter verification code: ';
-                $authCode = "4/0gG6lE-Y9sluQDg074h431bi-PoGnqY_LS3q-j6nev4LfZbiHtdTyI3M63SLAUkKBKKZenJ7T05L-PMaQEOZej0";
-
-                // Exchange authorization code for an access token.
-                $accessToken = $client->fetchAccessTokenWithAuthCode($authCode);
-//                dd($accessToken);
-                $client->setAccessToken($accessToken);
-//                dd($client->getAccessToken());
-
-                // Check to see if there was an error.
-                if (array_key_exists('error', $accessToken)) {
-                    throw new Exception(join(', ', $accessToken));
+    protected function changeEnv($data = array()){
+        if(count($data) > 0){
+            $env = file_get_contents(base_path() . '/.env');
+            $env = preg_split('/\s+/', $env);;
+            foreach((array)$data as $key => $value){
+                foreach($env as $env_key => $env_value){
+                    $entry = explode("=", $env_value, 2);
+                    if($entry[0] == $key){
+                        $env[$env_key] = $key . "=" . $value;
+                    } else {
+                        $env[$env_key] = $env_value;
+                    }
                 }
             }
-            // Save the token to a file.
-            if (!file_exists(dirname($tokenPath))) {
-                mkdir(dirname($tokenPath), 0700, true);
-            }
-            file_put_contents($tokenPath, json_encode($client->getAccessToken()));
+            $env = implode("\n", $env);
+            file_put_contents(base_path() . '/.env', $env);
+            return true;
+        } else {
+            return false;
         }
-        return $client;
     }
-    public function __construct(){
-//        if(!LaravelGmail::check()){
-//            return 'login to continue';
-////            return redirect()->to('/oauth/gmail');
-//        }else{
-//            dd('rr');
-//        }
-//        if(LaravelGmail::isAccessTokenExpired()){
-//            LaravelGmail::fetchAccessTokenWithRefreshToken( LaravelGmail::getRefreshToken() );
-//            $token = LaravelGmail::getAccessToken();
-//            LaravelGmail::setAccessToken( $token );
-//            LaravelGmail::saveAccessToken( $token );
-////            dd('sa');
-//        }
+    public function __construct(LaravelGmail $laravelGmail){
+        $this->middleware(function ($request, $next) use($laravelGmail){
+            $api = GmailAPI::where('staff_id','=',auth()->guard('staffs')->user()->id)->first();
+            if(!$api){
+                return redirect()->route('gmail.api.create');
+            }else{
+                if(!$laravelGmail::check()){
+                    $env_update = $this->changeEnv(array(
+                        "GMAIL_PROJECT_ID" => $api->project_id,
+                        "GMAIL_CLIENT_ID" => $api->client_id,
+                        "GMAIL_CLIENT_SECRET" => $api->client_secret,
+                        "GMAIL_REDIRECT_URI" => $api->redirect_url
+                    ));
+                    if($env_update){
+                        Artisan::call('config:clear');
+                        Artisan::call('cache:clear');
+                        return \Dacastro4\LaravelGmail\Facade\LaravelGmail::redirect();
+                    } else {
+                        \Session::flash('alert-danger','Something Went Wrong on Mail API');
+                        return redirect()->to('/branchadmin/jobs');
+                    }
+                }else{
+                    return $next($request);
+                }
+            }
 
+        });
     }
     /**
      * Show the application dashboard.
@@ -103,41 +80,16 @@ class GmailController extends Controller
     public function index(Request $request)
     {
 
-
         $messages=array();
-//        $gmailall = LaravelGmail::message()->in( $box = 'inbox' )->all();
-//        $inbox = count($gmailall);
-//        $access_token = LaravelGmail::getToken()['access_token'];
-//        $url = "https://www.googleapis.com/gmail/v1/users/me/";
-//        $message_url = $url."messages?maxResults=10&q=in:inbox&access_token=".$access_token."&pageToken=".$pageToken;
-//        $ch = curl_init();
-//        curl_setopt($ch, CURLOPT_URL, $message_url);
-//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-//        $gmails = json_decode(curl_exec($ch), true);
-//        $token = $access_token;
-//        dd($gmails);
-//        echo $token;
-//        dd('aa');
-//        $opt_param = array();
-//        dd(LaravelGmail::message()->listUsersMessages('me', $opt_param));
 
-//        $messages['inbox']= LaravelGmail::message()->take(10)->in('INBOX')->next();
         $msg = LaravelGmail::message();
         $messages['inbox'] = $msg->take(10)->in('INBOX')->all(); //gets first 10
 //        $msg->take(3)->in('INBOX')->all();
 //        $messages['inbox'] = $msg->take(3)->in('INBOX')->all('10586441687922781634');
         $messages['inbox']->pageToken=$msg->pageToken;
-//        dd($messages);
-//        $messages['inbox']= $msg->next();
-//        dd($msg->next());
-//        dd(LaravelGmail::message()->getNextPageToken());
-
         $messages['social'] = LaravelGmail::message()->in('SOCIAL')->all();
-
         $messages['promotions'] = LaravelGmail::message()->in('PROMOTIONS')->all();
 
-//        dd($messages->pageToken);
-//        dd($messages);
         return view('branchadmin.gmail.index')->with('data',$messages);
     }
     public function page(Request $request,$id)

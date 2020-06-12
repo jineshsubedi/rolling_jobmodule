@@ -36,9 +36,10 @@ class GoogleDriveController extends Controller
     {
 
         $this->middleware(function ($request, $next) use ($client) {
+//            dd(auth());
             $this->api = GoogledriveAPI::where('staff_id','=',auth()->guard('staffs')->user()->id)->first();
             if($this->api == null){
-                return redirect()->route('googledrive.api');
+                return redirect()->route('googledrive.api.create');
             }
             $client->setClientId($this->api->client_id);
             $client->setClientSecret($this->api->client_secret);

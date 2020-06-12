@@ -16,9 +16,9 @@
                         <form class="form-horizontal" role="form" id="testform" method="POST" action="<?php echo e(url('/branchadmin/jobs/application/callGroupMeeting')); ?>">
                             <?php echo csrf_field(); ?>
 
-                            <?php foreach($datas['employee_id'] as $employee_id): ?>
+                            <?php $__currentLoopData = $datas['employee_id']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $employee_id): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
                                 <input type="hidden"  name="id[]" value="<?php echo e($employee_id); ?>">
-                            <?php endforeach; ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
                             <input type="hidden"  name="job_id" value="<?php echo e($datas['job_id']); ?>">
                             <input type="hidden"  name="tab_id" value="<?php echo e($datas['tab_id']); ?>">
                             <div class="row">

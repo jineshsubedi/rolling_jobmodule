@@ -112,6 +112,14 @@
             <i class="fa fa-clipboard"></i> <span>Job Post</span>
           </a>
         </li>
+      </ul>
+    </li>
+    <li class="treeview">
+      <a href="#">
+        <i class="fa fa-users"></i>
+        <span>API</span> <i class="fa fa-angle-left pull-right"></i>
+      </a>
+      <ul class="treeview-menu">
         <li>
           <a href="<?php echo e(url('/branchadmin/calendar')); ?>">
             <i class="fa fa-clipboard"></i> <span>Calendar</span>
@@ -123,13 +131,28 @@
           </a>
         </li>
         <li>
+          <a href="<?php echo e(route('googledrive.api.edit')); ?>">
+            <i class="fa fa-clipboard"></i> <span>Drive API</span>
+          </a>
+        </li>
+        <li>
           <a href="<?php echo e(url('/branchadmin/gmail')); ?>">
             <i class="fa fa-clipboard"></i> <span>Gmail</span>
           </a>
         </li>
         <li>
+          <a href="<?php echo e(route('gmail.api.edit')); ?>">
+            <i class="fa fa-clipboard"></i> <span>Gmail API</span>
+          </a>
+        </li>
+        <li>
           <a href="<?php echo e(url('/branchadmin/dropbox')); ?>">
             <i class="fa fa-clipboard"></i> <span>Dropbox</span>
+          </a>
+        </li>
+        <li>
+          <a href="<?php echo e(route('dropbox.api.edit')); ?>">
+            <i class="fa fa-clipboard"></i> <span>Dropbox API</span>
           </a>
         </li>
       </ul>

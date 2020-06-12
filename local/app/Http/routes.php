@@ -24,36 +24,53 @@ if (version_compare(PHP_VERSION, '7.2.0', '>=')) {
 use Illuminate\Http\Request;
 
 
-//Route::post('/upload', function (Request $request) {
-//    // dd($request->file("documents"));
-//    // dd
-//    dd($request->file("document")->store("1uSA386lPj6eHGH_fzj0iuphouozGi66p","google"));
-//})->name("upload");
     
 Route::group(['prefix' => 'supervisor', 'middleware' => ['web']], function () {
     
 });
 // gmail testing
-Route::get('gmail', 'branchadmin\GmailController@index')->name('gmail');
 
 //Route::get('/oauth/gmail', function (){
 //    return \Dacastro4\LaravelGmail\Facade\LaravelGmail::redirect();
-//});
+//})->name('gmail.outh.login');
 //
-//Route::get('/oauth/gmail/callback', function (){
-//    \Dacastro4\LaravelGmail\Facade\LaravelGmail::makeToken();
-//    return redirect()->route('branchadmin.gmail.index');
-//});
-//
-//Route::get('/oauth/gmail/logout', function (){
-//    \Dacastro4\LaravelGmail\Facade\LaravelGmail::logout(); //It returns exception if fails
-//    return redirect()->to('/branchadmin/jobs');
-//});
+Route::get('/oauth/gmail/callback', function (){
+    \Dacastro4\LaravelGmail\Facade\LaravelGmail::makeToken();
+    return redirect()->route('branchadmin.gmail.index');
+});
+
+Route::get('/oauth/gmail/logout', function (){
+    \Dacastro4\LaravelGmail\Facade\LaravelGmail::logout(); //It returns exception if fails
+    return redirect()->to('/branchadmin/jobs');
+});
+
+
+Route::get('gmail', 'branchadmin\GmailController@index')->name('gmail');
+Route::get('branchadmin/googledriveapi/create', 'branchadmin\ApiController@getDriveApi')->name('googledrive.api.create');
+
 
 Route::group(['prefix' => 'branchadmin', 'middleware' => ['web']], function () {
 
+
+    Route::post('branchadmin/googledriveapi/create', 'branchadmin\ApiController@storeDriveApi')->name('googledrive.api.store');
+    Route::get('branchadmin/googledriveapi/edit', 'branchadmin\ApiController@editDriveApi')->name('googledrive.api.edit');
+    Route::post('branchadmin/googledriveapi/edit', 'branchadmin\ApiController@updateDriveApi')->name('googledrive.api.update');
+
+    Route::get('branchadmin/dropboxapi/create', 'branchadmin\ApiController@getDropboxApi')->name('dropbox.api.create');
+    Route::post('branchadmin/dropboxapi/create', 'branchadmin\ApiController@storeDropboxApi')->name('dropbox.api.store');
+    Route::get('branchadmin/dropboxapi/edit', 'branchadmin\ApiController@editDropboxApi')->name('dropbox.api.edit');
+    Route::post('branchadmin/dropboxapi/edit', 'branchadmin\ApiController@updateDropboxApi')->name('dropbox.api.update');
+
+    Route::get('branchadmin/gmailapi/create', 'branchadmin\ApiController@getGmailApi')->name('gmail.api.create');
+    Route::post('branchadmin/gmailapi/create', 'branchadmin\ApiController@storeGmailApi')->name('gmail.api.store');
+    Route::get('branchadmin/gmailapi/edit', 'branchadmin\ApiController@editGmailApi')->name('gmail.api.edit');
+    Route::post('branchadmin/gmailapi/edit', 'branchadmin\ApiController@updateGmailApi')->name('gmail.api.update');
+
+
+
     Route::post('/getfaculty', 'branchadmin\BranchAdminController@getFaculty');
     Route::get('oauth2callback', 'branchadmin\CalendarController@oauth2callback')->name('oauth2callback');
+
 
     Route::group(['middleware' =>['branchadmin'], 'as' => 'branchadmin.'], function(){
         //jobs
@@ -209,10 +226,6 @@ Route::group(['prefix' => 'staffs', 'middleware' => ['web']], function () {
 
 
 Route::group(['middleware' => 'web'], function () {
-    Route::get('staffs/googledrive/api', 'staffs\StaffLoginController@getDriveApi')->name('googledrive.api');
-    Route::post('staffs/googledrive/api', 'staffs\StaffLoginController@storeDriveApi')->name('googledrive.api.store');
-    Route::get('staffs/dropbox/api', 'staffs\StaffLoginController@getDropboxApi')->name('dropbox.api');
-    Route::post('staffs/dropbox/api', 'staffs\StaffLoginController@storeDropboxApi')->name('dropbox.api.store');
 
     Route::auth();
     Route::get('staffs/login', 'staffs\StaffLoginController@getLogin');

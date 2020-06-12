@@ -32,18 +32,18 @@ Selected Application for Written Exam
                 <div class="row">
             <div class="col-xs-12">
             <div class="alert alert-danger">
-             <?php foreach($errors->all() as $error): ?>
+             <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
               <?php echo e('* : '.$error); ?></br>
-             <?php endforeach; ?>
+             <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
                 </div>
             </div>
 
           </div>
        <?php endif; ?>
-<?php /* <?php if(Auth::guard('staffs')->user()->user_type === 1): ?> */ ?>
+
 <link rel="stylesheet" href="<?php echo e(asset('/assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')); ?>">
 <script src="<?php echo e(asset('assets/ckeditor/ckeditor.js')); ?>"></script>
-    <?php foreach($datas['meeting'] as $meeting ): ?>
+    <?php $__currentLoopData = $datas['meeting']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $meeting): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
         <div class="row bg bg-success">
             <div class="col-md-6 ">
                 <h5>Topic: <?php echo e($meeting->topic); ?></h5>
@@ -62,7 +62,7 @@ Selected Application for Written Exam
             </div>
         </div>
         <hr>
-    <?php endforeach; ?>
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
    <div class="row">
       <div class="col-md-12">
       <div class="box box-success collapsed-box">
@@ -94,13 +94,13 @@ Selected Application for Written Exam
                                 <label class="label-control required col-md-2 text-center">Job Status</label>
                                 <div class="col-md-10">
                                     <select class="form-control" name="status">
-                                        <?php foreach($datas['process_status'] as $status): ?>
+                                        <?php $__currentLoopData = $datas['process_status']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $status): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
                                         <?php if($datas['status'] == $status->id): ?>
                                         <option selected="selected" value="<?php echo e($status->id); ?>"><?php echo e($status->title); ?></option>
                                         <?php else: ?>
                                         <option value="<?php echo e($status->id); ?>"><?php echo e($status->title); ?></option>
                                         <?php endif; ?>
-                                        <?php endforeach; ?>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
                                     </select>
                                 </div>
                             </div>
@@ -436,7 +436,7 @@ Selected Application for Written Exam
   var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
     var pieChart       = new Chart(pieChartCanvas)
     var PieData        = [
-    <?php foreach($datas['age'] as $age): ?>
+    <?php $__currentLoopData = $datas['age']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $age): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
       {
         value    : '<?php echo e($age["total"]); ?>',
         color    : '<?php echo e($age["color"]); ?>',
@@ -444,7 +444,7 @@ Selected Application for Written Exam
         label    : '<?php echo e($age["title"]); ?>'
       },
       
-      <?php endforeach; ?>
+      <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
     ]
     <?php endif; ?>
     var pieOptions     = {
@@ -477,7 +477,7 @@ Selected Application for Written Exam
 
 	});
 </script>
-<?php /* <?php endif; ?> */ ?>
+
                <form class="form-horizontal" role="form" id="testform_writtenexam" method="POST" action="<?php echo e(url('/branchadmin/jobs/update_written')); ?>">
                 <?php echo csrf_field(); ?>
 
@@ -544,7 +544,7 @@ Selected Application for Written Exam
             <li><a href="<?php echo e(url('branchadmin/jobs/tab2/'.$datas['job_id'].'/callmeeting/'.$row->id)); ?>" class="btn btn-default btn-xs" title="Create Zoom Meeting"><i class="fa fa-file"></i>Create Meeting</a></li>
 
         <li><a href="<?php echo e(url('branchadmin/jobs/application/view/'.$row->id)); ?>" class="btn btn-default btn-xs" title="view"><i class="fa fa-eye"></i>View</a></li>
-                            <?php /* <?php if(Auth::guard('employer')->user()->user_type === 1): ?> */ ?>             
+                                         
                             <li><a href="javascript:void(0);" onClick="confirm_delete('/<?php echo e($row->id); ?>')" class="btn btn-danger btn-xs" title="Delete Invoice"><i class="fa fa-fw fa-remove"></i>Delete</a></li>
                              <?php if($strategic != ''): ?>  
                             <li><a href="<?php echo e($strategic); ?>" class="btn btn-default" title="Download Strategic Paper" download="download"><i class="fa fa-download"></i>Strategic Paper</a></li>
@@ -552,7 +552,7 @@ Selected Application for Written Exam
                             <?php if($presentation != ''): ?>  
                             <li><a href="<?php echo e($presentation); ?>" class="btn btn-default" title="Download Presentation" download="download"><i class="fa fa-download"></i>Presentation</a></li>
                             <?php endif; ?>
-                            <?php /* <?php endif; ?> */ ?>
+                            
                             
                             </ul>
                             </div>
@@ -574,12 +574,12 @@ Selected Application for Written Exam
                       </tr>
 
                       <?php endif; ?>
-                      <?php /*<?php if(Auth::guard('employer')->user()->user_type === 1): ?>*/ ?>
+                      
                       <tr>
                         <td colspan="2"><button type="button" id="for-written" onClick="confirm_update()" class="btn btn-black">Select for Group Discussion</button></td>
                         <td colspan="7"><button type="button" id="for-meeting" onClick="confirm_meeting()" class="btn btn-black">Select for Group Meeting</button></td>
                     </tr>
-                      <?php /* <?php endif; ?> */ ?>
+                      
                     </tfoot>
                     </table>
                   </form>

@@ -48,7 +48,7 @@ Job Level
 
                             @php($from = $message->getFrom())
                             @if($message->getLabels()[0] == "UNREAD")
-                                <td><?php echo $i++ ;?> (unread) {{$data['inbox']->pageToken}}</td>
+                                <td><?php echo $i++ ;?> (unread)</td>
                                 <th><?php echo $from['name'];?> ({{$from['email']}})</th>
                                 <th>{{$message->getSubject()}}</th>
                             @else
