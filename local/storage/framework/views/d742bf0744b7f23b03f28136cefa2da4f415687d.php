@@ -9,9 +9,16 @@ New Job Level
 <?php $__env->startSection('content'); ?>
  <div class="row">
     <div class="col-xs-12">
+        <div class="row">
+
+            <a href="<?php echo e(route('googledrive.api.guide')); ?>" target="_blank" class="btn btn-primary right"><i class="fa fa-file"></i>  How to setup Drive API</a>
+        </div>
         <div class="box">
             <div class="panel panel-default">
-                <div class="panel-heading">Enter API details</div>
+                <div class="panel-heading">
+                    Enter API details
+                    <a href="https://console.developers.google.com/" target="_blank" class="btn btn-primary">Google API console</a>
+                </div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" id="testform" method="POST" action="<?php echo e(route('googledrive.api.update')); ?>" enctype="multipart/form-data">
                         <?php echo csrf_field(); ?>

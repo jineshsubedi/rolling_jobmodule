@@ -70,6 +70,10 @@ class ApiController extends Controller
         if(GoogledriveAPI::where('staff_id','=',auth()->guard('staffs')->user()->id)->first())return redirect()->route('branchadmin.drive.index');
         return view('branchadmin.drive.getapi');
     }
+    public function guideDriveApi()
+    {
+        return view('branchadmin.drive.apiguide');
+    }
     public function editDriveApi()
     {
         if($data = GoogledriveAPI::where('staff_id','=',auth()->guard('staffs')->user()->id)->first()){

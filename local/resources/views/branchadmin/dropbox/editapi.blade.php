@@ -10,9 +10,15 @@ New Job Level
 @section('content')
  <div class="row">
     <div class="col-xs-12">
+        <div class="row">
+            <a href="https://www.dropbox.com/developers/reference/getting-started?_tk=guides_lp&_ad=guides2&_camp=get_started" target="_blank" class="btn btn-primary right"><i class="fa fa-file"></i>  How to setup Drive API</a>
+        </div>
         <div class="box">
             <div class="panel panel-default">
-                <div class="panel-heading">Enter API details</div>
+                <div class="panel-heading">
+                    Enter API details
+                    <a href="https://www.dropbox.com/developers/documentation/http/overview" target="_blank" class="btn btn-primary">Dropbox API console</a>
+                </div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" id="testform" method="POST" action="{{ route('dropbox.api.update') }}" enctype="multipart/form-data">
                         {!! csrf_field() !!}

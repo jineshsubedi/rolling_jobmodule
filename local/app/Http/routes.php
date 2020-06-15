@@ -52,6 +52,8 @@ Route::get('branchadmin/googledriveapi/create', 'branchadmin\ApiController@getDr
 Route::group(['prefix' => 'branchadmin', 'middleware' => ['web']], function () {
 
 
+    Route::get('branchadmin/googledriveapi/guide', 'branchadmin\ApiController@guideDriveApi')->name('googledrive.api.guide');
+    Route::get('branchadmin/googledriveapi/create', 'branchadmin\ApiController@getDriveApi')->name('googledrive.api.create');
     Route::post('branchadmin/googledriveapi/create', 'branchadmin\ApiController@storeDriveApi')->name('googledrive.api.store');
     Route::get('branchadmin/googledriveapi/edit', 'branchadmin\ApiController@editDriveApi')->name('googledrive.api.edit');
     Route::post('branchadmin/googledriveapi/edit', 'branchadmin\ApiController@updateDriveApi')->name('googledrive.api.update');
